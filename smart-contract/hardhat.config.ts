@@ -1,39 +1,44 @@
 import { HardhatUserConfig, vars} from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
-
-const ANKR_API_KEY = vars.get("ANKR_API_KEY");
+import "dotenv/config";
 
 const config: HardhatUserConfig = {
   solidity: "0.8.26",
   networks: {
-    electroneum: {
-      url: `https://rpc.ankr.com/electroneum/${ANKR_API_KEY}`,
-      accounts: vars.has("PRIVATE_KEY") ? [vars.get("PRIVATE_KEY")] : [],
+    kaia: {
+      url: "https://public-en-kairos.node.kaia.io",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      chainId: 1001,
     },
-    'electroneum-testnet': {
-      url: 'https://rpc.ankr.com/electroneum_testnet',
-      accounts: vars.has("PRIVATE_KEY") ? [vars.get("PRIVATE_KEY")] : [],
+    'kaia-testnet': {
+      url: 'https://public-en-kairos.node.kaia.io',
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      chainId: 1001,
     },
+  },
+  sourcify: {
+    enabled: true,
   },
   etherscan: {
     apiKey: {
-      electroneum: "empty",
+      kaia: process.env.ETHERSCAN_API_KEY || "empty",
+      "kaia-testnet": process.env.ETHERSCAN_API_KEY || "empty",
     },
     customChains: [
       {
-        network: "electroneum",
-        chainId: 52014,
+        network: "kaia",
+        chainId: 1001,
         urls: {
-          apiURL: "https://blockexplorer.electroneum.com/api",
-          browserURL: "https://blockexplorer.electroneum.com",
+          apiURL: "https://kairos.kaiascan.io/api",
+          browserURL: "https://kairos.kaiascan.io",
         },
       },
       {
-        network: "electroneum-testnet",
-        chainId: 5201420,
+        network: "kaia-testnet",
+        chainId: 1001,
         urls: {
-          apiURL: "https://testnet-blockexplorer.electroneum.com/api",
-          browserURL: "https://testnet-blockexplorer.electroneum.com"
+          apiURL: "https://kairos.kaiascan.io/api",
+          browserURL: "https://kairos.kaiascan.io"
         }
       }
     ],

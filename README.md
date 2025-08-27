@@ -8,7 +8,7 @@
 
 ## About Manna
 
-Manna (만나) is a decentralized platform designed to revolutionize how global fans support Korean creators. By leveraging a KRW Stablecoin (KRW-S), Manna enables instant, transparent, and low-cost direct financial transfers, solving the pervasive issues of high fees, slow settlements, and lack of transparency in cross-border payments.
+Manna (만나) is a decentralized platform designed to revolutionize how global fans support Korean creators (webtoon artists, musicians, streamers, educators). By leveraging a KRW Stablecoin (KRW-S), Manna enables instant, transparent, and low-cost direct financial transfers, solving the pervasive issues of high fees, slow settlements, and lack of transparency in cross-border payments.
 
 This repository contains the proof-of-concept (PoC) for **Phase 1** of our vision, demonstrating the core fan-to-creator tipping functionality. While this prototype is focused, it is the first step in a much larger, multi-phase roadmap.
 
@@ -45,4 +45,6 @@ For details on the KRW Stablecoin smart contract, please refer to the [Smart Con
 ##  Curated By 
 Babalola Taiwo J
 t.babalolajoseph@gmail.com
+
+
 

@@ -1,5 +1,4 @@
 import { http, createConfig, fallback } from 'wagmi';
-import { electroneum, electroneumTestnet } from 'wagmi/chains';
 import { walletConnect } from 'wagmi/connectors';
 
 declare module 'wagmi' {
@@ -10,14 +9,26 @@ declare module 'wagmi' {
 
 const projectId = process.env.NEXT_PUBLIC_WALLET_CONNECT_ID;
 
+// Define Kaia testnet chain
+const kaiaTestnet = {
+  id: 1001,
+  name: 'Kaia Testnet',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Kaia',
+    symbol: 'KAIA',
+  },
+  rpcUrls: {
+    default: { http: ['https://public-en-kairos.node.kaia.io'] },
+    public: { http: ['https://public-en-kairos.node.kaia.io'] },
+  },
+  blockExplorers: {
+    default: { name: 'Kaia Explorer', url: 'https://explorer.kaia.io' },
+  },
+  testnet: true,
+} as const;
 
-export const supportedNetworks = [electroneum, electroneumTestnet] as const;
-
-// Primary and fallback RPC URLs
-const MAINNET_PRIMARY_RPC = 'https://rpc.ankr.com/electroneum';
-const MAINNET_FALLBACK_RPC = 'https://rpc.electroneum.com';
-const TESTNET_PRIMARY_RPC = 'https://rpc.ankr.com/electroneum_testnet';
-const TESTNET_FALLBACK_RPC = 'https://rpc.ankr.com/electroneum_testnet';
+export const supportedNetworks = [kaiaTestnet] as const;
 
 export const config = createConfig({
   chains: supportedNetworks,
@@ -25,13 +36,8 @@ export const config = createConfig({
     walletConnect({ projectId : projectId ?? ''}),
   ],
   transports: {
-    [electroneum.id]: fallback([
-      http(MAINNET_PRIMARY_RPC),
-      http(MAINNET_FALLBACK_RPC),
-    ]),
-    [electroneumTestnet.id]: fallback([
-      http(TESTNET_PRIMARY_RPC),
-      http(TESTNET_FALLBACK_RPC),
+    [kaiaTestnet.id]: fallback([
+      http('https://public-en-kairos.node.kaia.io'),
     ]),
   },
 });
