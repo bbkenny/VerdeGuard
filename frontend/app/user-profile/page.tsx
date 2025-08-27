@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { useAccount, useReadContract, useWriteContract, useTransaction, useSwitchChain } from "wagmi";
 import { parseUnits, formatUnits } from "viem";
-import Header from "@/components/Header/Header";
-import Footer from "@/components/Footer/Footer";
-import MANNA_ABI from "@/constants/ABIs/manna.json";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import MANNA_ABI from "../../constants/ABIs/manna.json";
 import { 
   User, 
   Edit3, 
@@ -57,7 +57,7 @@ const UserProfile = () => {
   const [tipAmount, setTipAmount] = useState("");
   const [creatorAddress, setCreatorAddress] = useState<string>(CREATOR_ADDRESS);
   const [transactionStatus, setTransactionStatus] = useState("");
-  const [transactionHash, setTransactionHash] = useState<`0x${string}` | null>(null);
+  const [transactionHash] = useState<`0x${string}` | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const [recentTips, setRecentTips] = useState<TipTransaction[]>([]);
   const [balanceAnimation, setBalanceAnimation] = useState(false);
@@ -122,7 +122,7 @@ const UserProfile = () => {
   const { writeContract, isPending: isTransferPending } = useWriteContract();
 
   // Transaction status
-  const { data: transactionData, isSuccess: isConfirmed } = useTransaction({
+  const { isSuccess: isConfirmed } = useTransaction({
     hash: transactionHash || undefined,
   });
 
@@ -168,8 +168,8 @@ const UserProfile = () => {
 
   const handleSwitchNetwork = async () => {
     try {
-      await switchChain({ chainId: KAIA_BAOBAB_CHAIN_ID as any });
-    } catch (error: any) {
+      await switchChain({ chainId: KAIA_BAOBAB_CHAIN_ID });
+    } catch (error: unknown) {
       console.error("Failed to switch network:", error);
       setTransactionStatus("Failed to switch network. Please switch to Kaia Baobab manually.");
     }
@@ -195,9 +195,10 @@ const UserProfile = () => {
         args: [creatorAddress as `0x${string}`, amountInWei],
       });
       setTransactionStatus("Sending tip...");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error sending tip:", error);
-      setTransactionStatus(`Transaction failed: ${error.message || error.code}`);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      setTransactionStatus(`Transaction failed: ${errorMessage}`);
     }
   };
 
@@ -231,7 +232,7 @@ const UserProfile = () => {
   const isWrongNetwork = isConnected && chain?.id !== KAIA_BAOBAB_CHAIN_ID;
   const canSendTip = isConnected && !isWrongNetwork && tipAmount && creatorAddress && creatorAddress.length === 42 && !isTransferPending;
 
-  const TabButton = ({ id, label, icon: Icon, isActive, onClick }: { id: string; label: string; icon: any; isActive: boolean; onClick: (id: string) => void }) => (
+  const TabButton = ({ id, label, icon: Icon, isActive, onClick }: { id: string; label: string; icon: React.ComponentType<{ size?: number; className?: string }>; isActive: boolean; onClick: (id: string) => void }) => (
     <button
       onClick={() => onClick(id)}
       className={`flex items-center px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
@@ -249,7 +250,7 @@ const UserProfile = () => {
     <div className="min-h-screen bg-gray-50">
       <Header />
 
-      <div className="max-w-7xl mx-auto px-8 md:px-12 lg:px-16 py-24">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-24">
         {/* Network Warning */}
         {isWrongNetwork && (
           <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-lg flex items-center justify-between">
@@ -266,7 +267,7 @@ const UserProfile = () => {
           </div>
         )}
 
-        <div className="grid lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
           {/* Profile Card */}
           <div className="lg:col-span-1">
             <div className={`bg-white rounded-2xl shadow-lg p-6 sticky top-32 transform transition-all duration-500 ${animationClass}`}>
@@ -282,20 +283,20 @@ const UserProfile = () => {
                 </div>
                 
                 <div className="space-y-2">
-                  <h1 className="text-2xl font-bold text-[#144489]">{userData.name}</h1>
-                  <p className="text-[#EFAC20] font-medium">{userData.username}</p>
-                  <p className="text-sm text-gray-600">{userData.bio}</p>
+                                  <h1 className="text-xl font-bold text-[#144489]">{userData.name}</h1>
+                <p className="text-[#EFAC20] font-medium text-sm">{userData.username}</p>
+                <p className="text-xs text-gray-600">{userData.bio}</p>
                 </div>
               </div>
 
               {/* Quick Stats */}
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="text-center p-3 bg-gradient-to-r from-[#144489]/5 to-[#144489]/10 rounded-lg hover:shadow-md transition-all">
-                  <p className="text-xl font-bold text-[#144489]">{mockStats.creatorsSupported}</p>
+                  <p className="text-lg font-bold text-[#144489]">{mockStats.creatorsSupported}</p>
                   <p className="text-xs text-gray-600">Creators</p>
                 </div>
                 <div className="text-center p-3 bg-gradient-to-r from-[#EFAC20]/5 to-[#EFAC20]/10 rounded-lg hover:shadow-md transition-all">
-                  <p className="text-xl font-bold text-[#EFAC20]">₩{(mockStats.totalTipped / 1000)}K</p>
+                  <p className="text-lg font-bold text-[#EFAC20]">₩{(mockStats.totalTipped / 1000)}K</p>
                   <p className="text-xs text-gray-600">Tipped</p>
                 </div>
               </div>
@@ -332,7 +333,7 @@ const UserProfile = () => {
           {/* Main Content */}
           <div className="lg:col-span-3">
             {/* Tab Navigation */}
-            <div className="flex flex-wrap gap-3 mb-8 p-2 bg-white rounded-2xl shadow-sm">
+            <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-8 p-2 sm:p-3 bg-white rounded-2xl shadow-sm">
               <TabButton id="profile" label="Profile" icon={User} isActive={activeTab === 'profile'} onClick={setActiveTab} />
               <TabButton id="tip" label="Tip Creator" icon={Zap} isActive={activeTab === 'tip'} onClick={setActiveTab} />
               <TabButton id="activity" label="Activity" icon={Activity} isActive={activeTab === 'activity'} onClick={setActiveTab} />
@@ -349,9 +350,9 @@ const UserProfile = () => {
                     <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#EFAC20] to-[#f4c050] flex items-center justify-center">
                       <span className="text-4xl">🎨</span>
                     </div>
-                    <h2 className="text-2xl font-bold text-[#144489] mb-1">Artist Kim (김작가)</h2>
-                    <p className="text-gray-600 mb-2">@artist_kim_seoul</p>
-                    <p className="text-sm text-gray-500 leading-relaxed">
+                    <h2 className="text-xl font-bold text-[#144489] mb-1">Artist Kim (김작가)</h2>
+                    <p className="text-gray-600 mb-2 text-sm">@artist_kim_seoul</p>
+                    <p className="text-xs text-gray-500 leading-relaxed">
                       Independent illustrator bringing Seoul stories to life. Creating webtoons that bridge cultures. 감사합니다! ✨
                     </p>
                   </div>
@@ -359,7 +360,7 @@ const UserProfile = () => {
                   {/* Creator Balance Display */}
                   <div className={`bg-gradient-to-r from-[#144489] to-[#1a5ba8] text-white p-6 rounded-xl text-center mb-6 transition-all duration-1000 ${balanceAnimation ? 'scale-105 ring-4 ring-[#EFAC20]/30' : ''}`}>
                     <p className="text-sm opacity-90 mb-1">Creator Balance</p>
-                    <p className="text-3xl font-bold mb-1">
+                    <p className="text-2xl font-bold mb-1">
                       ₩{Math.floor(parseFloat(formatBalance(creatorBalance as bigint))).toLocaleString()} KRW-S
                     </p>
                     <p className="text-xs opacity-75">Updates in real-time from Kaia Baobab</p>
@@ -388,8 +389,8 @@ const UserProfile = () => {
 
                 {/* Tip Panel */}
                 <div className="bg-white rounded-2xl shadow-lg p-6">
-                  <h2 className="text-2xl font-bold text-[#144489] mb-6 flex items-center">
-                    <Zap className="mr-3 text-[#EFAC20]" size={28} />
+                  <h2 className="text-xl font-bold text-[#144489] mb-6 flex items-center">
+                    <Zap className="mr-3 text-[#EFAC20]" size={24} />
                     Send Tip (KRW-S)
                   </h2>
 
@@ -415,7 +416,7 @@ const UserProfile = () => {
 
                   {/* Creator Address Input */}
                   <div className="mb-6">
-                    <label htmlFor="creatorAddress" className="block text-base font-bold text-[#144489] mb-3">
+                    <label htmlFor="creatorAddress" className="block text-sm font-bold text-[#144489] mb-3">
                       Creator Wallet Address
                     </label>
                     <input
@@ -434,7 +435,7 @@ const UserProfile = () => {
 
                   {/* Amount Input */}
                   <div className="mb-6">
-                    <label htmlFor="amount" className="block text-base font-bold text-[#144489] mb-3">
+                    <label htmlFor="amount" className="block text-sm font-bold text-[#144489] mb-3">
                       Tip Amount (KRW-S)
                     </label>
                     <input
@@ -450,7 +451,7 @@ const UserProfile = () => {
 
                   {/* Quick Tip Buttons */}
                   <div className="mb-6">
-                    <p className="text-base font-bold text-[#144489] mb-4">Quick Tips:</p>
+                    <p className="text-sm font-bold text-[#144489] mb-4">Quick Tips:</p>
                     <div className="grid grid-cols-3 gap-3">
                       {[1000, 5000, 10000].map((amount) => (
                         <button
@@ -521,8 +522,8 @@ const UserProfile = () => {
                       Recent Tips
                     </h3>
                     <div className="space-y-3">
-                      {recentTips.map((tip, index) => (
-                        <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                              {recentTips.map((tip) => (
+                          <div key={`tip-${tip.timestamp}`} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                           <div className="flex items-center">
                             <div className="w-8 h-8 bg-[#EFAC20] rounded-full flex items-center justify-center mr-3">
                               <span className="text-white text-sm">🎉</span>
@@ -708,7 +709,7 @@ const UserProfile = () => {
                     Recent Activity
                   </h3>
                   <div className="space-y-4">
-                    {mockTransactions.map((tx, index) => (
+                    {mockTransactions.map((tx) => (
                       <div key={tx.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:shadow-md transition-all hover:scale-102 transform">
                         <div className="flex items-center">
                           <div className="w-10 h-10 bg-[#EFAC20] rounded-full flex items-center justify-center mr-4">

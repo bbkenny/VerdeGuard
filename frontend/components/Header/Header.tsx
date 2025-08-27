@@ -12,9 +12,9 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <Image src={"/manna-logo.png"} alt="Manna logo" width={32} height={32}/>
-              <span className="text-xl font-bold text-[#144489]">
-                Manna (만나)
+              <Image src={"/manna-logo.png"} alt="Manna logo" width={28} height={28} className="sm:w-8 sm:h-8"/>
+              <span className="text-lg sm:text-xl font-bold text-[#144489]">
+                Manna <span className="hidden sm:inline">(만나)</span>
               </span>
             </Link>
           </div>
@@ -35,7 +35,7 @@ export default function Header() {
             </Link>
           </nav>
           
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4">
             <NetworkSwitcher />
             <WalletOptions />
           </div>

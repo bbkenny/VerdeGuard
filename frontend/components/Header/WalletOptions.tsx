@@ -10,6 +10,7 @@ export default function WalletOptions() {
   const { disconnect } = useDisconnect();
   const [showOptions, setShowOptions] = useState(false);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleConnect = (connector: any) => {
     connect({ connector });
     setShowOptions(false);
@@ -43,11 +44,11 @@ export default function WalletOptions() {
       <div className="relative wallet-options">
         <button
           onClick={() => setShowOptions(!showOptions)}
-          className="flex items-center space-x-2 px-4 py-2 bg-[#144489] text-white rounded-lg hover:bg-[#1a5ba8] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#144489] focus:ring-offset-2"
+          className="flex items-center space-x-1 sm:space-x-2 px-3 sm:px-4 py-2 bg-[#144489] text-white rounded-lg hover:bg-[#1a5ba8] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#144489] focus:ring-offset-2"
         >
           <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-          <span className="text-sm font-medium">
-            {address?.slice(0, 6)}...{address?.slice(-4)}
+          <span className="text-xs sm:text-sm font-medium">
+            {address?.slice(0, 4)}...{address?.slice(-3)}
           </span>
           <svg
             width="12"
@@ -101,17 +102,18 @@ export default function WalletOptions() {
 
   return (
     <div className="relative wallet-options">
-      <button
+              <button
         onClick={() => setShowOptions(!showOptions)}
-        className="flex items-center space-x-2 px-4 py-2 bg-[#144489] text-white rounded-lg hover:bg-[#1a5ba8] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#144489] focus:ring-offset-2"
+        className="flex items-center space-x-1 sm:space-x-2 px-3 sm:px-4 py-2 bg-[#144489] text-white rounded-lg hover:bg-[#1a5ba8] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#144489] focus:ring-offset-2"
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="14" height="14" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M21 12V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           <path d="M7 10h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           <path d="M12 15v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           <path d="M8 21h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
-        <span className="text-sm font-medium">Connect Wallet</span>
+        <span className="text-xs sm:text-sm font-medium hidden sm:inline">Connect Wallet</span>
+        <span className="text-xs sm:hidden">Connect</span>
         <svg
           width="12"
           height="12"

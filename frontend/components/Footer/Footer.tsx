@@ -1,83 +1,121 @@
 "use client";
 
-import { useState } from 'react';
-import Image from 'next/image';
-import { 
-  Github,
-  ExternalLink,
-  FileText,
-  BookOpen
-} from 'lucide-react';
+import Image from "next/image";
+import Link from "next/link";
+import { FileText, BookOpen, Github } from "lucide-react";
 
 interface FooterProps {
-  scrollToSection?: (id: string) => void;
+  scrollToSection: (id: string) => void;
 }
 
 export default function Footer({ scrollToSection }: FooterProps) {
   return (
-    <footer className="bg-[#144489] text-white py-12">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid md:grid-cols-4 gap-8 mb-8">
+    <footer className="bg-[#144489] text-white">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Logo and Description */}
           <div className="md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <Image src={"/manna-logo.png"} alt="Manna logo" width={32} height={32}/>
+              <Image src="/manna-logo.png" alt="Manna logo" width={32} height={32} />
               <span className="text-xl font-bold">Manna (만나)</span>
             </div>
-            <p className="text-gray-300 mb-4">
-              Bridging global passion to Korean creativity through the power of KRW stablecoins.
+            <p className="text-gray-300 text-sm leading-relaxed mb-4">
+              Bridging global passion to Korean creativity through instant, transparent KRW-S payments. 
+              Supporting Korean webtoon artists, musicians, streamers, and educators worldwide.
             </p>
           </div>
 
+          {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              {scrollToSection ? (
-                <>
-                  <li><button onClick={() => scrollToSection('problem')} className="text-gray-300 hover:text-[#EFAC20] transition-colors">The Problem</button></li>
-                  <li><button onClick={() => scrollToSection('solution')} className="text-gray-300 hover:text-[#EFAC20] transition-colors">Our Solution</button></li>
-                  <li><button onClick={() => scrollToSection('roadmap')} className="text-gray-300 hover:text-[#EFAC20] transition-colors">Roadmap</button></li>
-                  <li><button onClick={() => scrollToSection('demo')} className="text-gray-300 hover:text-[#EFAC20] transition-colors">Try Demo</button></li>
-                </>
-              ) : (
-                <>
-                  <li><a href="/#problem" className="text-gray-300 hover:text-[#EFAC20] transition-colors">The Problem</a></li>
-                  <li><a href="/#solution" className="text-gray-300 hover:text-[#EFAC20] transition-colors">Our Solution</a></li>
-                  <li><a href="/#roadmap" className="text-gray-300 hover:text-[#EFAC20] transition-colors">Roadmap</a></li>
-                  <li><a href="/#demo" className="text-gray-300 hover:text-[#EFAC20] transition-colors">Try Demo</a></li>
-                </>
-              )}
+            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link 
+                  href="/user-profile"
+                  className="text-gray-300 hover:text-[#EFAC20] transition-colors"
+                >
+                  Live Demo
+                </Link>
+              </li>
+              <li>
+                <button 
+                  onClick={() => scrollToSection('roadmap')}
+                  className="text-gray-300 hover:text-[#EFAC20] transition-colors"
+                >
+                  Roadmap
+                </button>
+              </li>
+              <li>
+                <Link 
+                  href="/user-profile"
+                  className="text-gray-300 hover:text-[#EFAC20] transition-colors"
+                >
+                  User Profile
+                </Link>
+              </li>
+              <li>
+                <button 
+                  onClick={() => scrollToSection('market')}
+                  className="text-gray-300 hover:text-[#EFAC20] transition-colors"
+                >
+                  Market Opportunity
+                </button>
+              </li>
             </ul>
           </div>
 
+          {/* Resources */}
           <div>
-            <h3 className="text-lg font-bold mb-4">Resources</h3>
-            <ul className="space-y-2">
+            <h3 className="text-lg font-semibold mb-4">Resources</h3>
+            <ul className="space-y-2 text-sm">
               <li>
-                <a href="https://github.com/thebabalola/manna" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#EFAC20] transition-colors flex items-center">
-                  <Github size={16} className="mr-2" />
-                  GitHub Repository
+                <a 
+                  href="https://github.com/thebabalola/manna"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 text-gray-300 hover:text-[#EFAC20] transition-colors"
+                >
+                  <Github size={16} />
+                  <span>GitHub Repository</span>
                 </a>
               </li>
               <li>
-                <a href="https://docs.google.com/presentation/d/1qKJidCy1NT8JviqDgs9dH36ehSE499nY/edit?usp=sharing&ouid=100528488557506058575&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#EFAC20] transition-colors flex items-center">
-                  <FileText size={16} className="mr-2" />
-                  Pitch Deck
+                <a 
+                  href="https://docs.google.com/presentation/d/1qKJidCy1NT8JviqDgs9dH36ehSE499nY/edit?usp=sharing&ouid=100528488557506058575&rtpof=true&sd=true"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 text-gray-300 hover:text-[#EFAC20] transition-colors"
+                >
+                  <FileText size={16} />
+                  <span>Pitch Deck</span>
                 </a>
               </li>
               <li>
-                <a href="https://docs.google.com/document/d/1I5fVrMsMLdSgmz3cI8YoEI8o7y8vWkBMGKT31-908u8/edit?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-[#EFAC20] transition-colors flex items-center">
-                  <BookOpen size={16} className="mr-2" />
-                  Concept Document
+                <a 
+                  href="https://docs.google.com/document/d/1I5fVrMsMLdSgmz3cI8YoEI8o7y8vWkBMGKT31-908u8/edit?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 text-gray-300 hover:text-[#EFAC20] transition-colors"
+                >
+                  <BookOpen size={16} />
+                  <span>Concept Document</span>
                 </a>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-white/20 pt-8 text-center">
-          <p className="text-gray-300">
-            © 2025 Manna - KRW Stablecoin Ideathon Project. Built on Kaia Blockchain.
-          </p>
+        {/* Bottom Section */}
+        <div className="border-t border-gray-700 mt-8 pt-8">
+          <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+            <p className="text-gray-400 text-sm">
+              © 2025 Manna (만나). All rights reserved.
+            </p>
+            <div className="flex space-x-6 text-sm">
+              <span className="text-gray-400">Chain ID: 1001</span>
+              <span className="text-gray-400">Network: Kaia Baobab</span>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

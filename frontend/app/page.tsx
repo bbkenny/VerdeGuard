@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import Header from "@/components/Header/Header";
-import Footer from "@/components/Footer/Footer";
+import Link from 'next/link';
+import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 import { 
   ArrowRight, 
   DollarSign, 
@@ -11,14 +12,7 @@ import {
   Zap, 
   Globe, 
   Users, 
-  TrendingUp,
-  BarChart3,
-  ChevronDown,
-  Github,
-  ExternalLink,
-  Menu,
-  X,
-  Wallet
+  TrendingUp
 } from 'lucide-react';
 
 // Intersection Observer Hook
@@ -62,35 +56,9 @@ const AnimatedSection = ({ children, className = "", delay = 0 }: { children: Re
   );
 };
 
-// Animated Card Component
-const AnimatedCard = ({ children, className = "", index = 0 }: { children: React.ReactNode; className?: string; index?: number }) => {
-  const [setRef, isInView] = useInView(0.2);
-  
-  return (
-    <div 
-      ref={setRef}
-      className={`transition-all duration-700 ease-out transform hover:scale-105 hover:-translate-y-2 ${
-        isInView 
-          ? 'opacity-100 translate-y-0 rotate-0' 
-          : 'opacity-0 translate-y-12 rotate-1'
-      } ${className}`}
-      style={{ 
-        transitionDelay: `${index * 150}ms`,
-        transformOrigin: 'center bottom'
-      }}
-    >
-      {children}
-    </div>
-  );
-};
+
 
 export default function MannaLandingPage() {
-  const [heroLoaded, setHeroLoaded] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setHeroLoaded(true), 300);
-    return () => clearTimeout(timer);
-  }, []);
 
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -144,36 +112,52 @@ export default function MannaLandingPage() {
            <div className="absolute bottom-1/4 right-1/2 text-5xl">💝</div>
          </div>
         
-        <div className="max-w-7xl mx-auto px-8 md:px-12 lg:px-16 py-20 relative z-10">
-          <div className="text-center">
-            <div className="mb-8">
-              <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-[#EFAC20] drop-shadow-lg">
-                Manna <span className="text-[#EFAC20] drop-shadow-2xl">(만나)</span>
-              </h1>
-              <p className="text-xl md:text-2xl mb-2 opacity-95 font-semibold">
-                Bridging Global Passion to Korean Creativity
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-20 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[80vh]">
+            {/* Left Side - Text Content */}
+            <div className="text-left">
+              <div className="mb-8">
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-[#EFAC20] drop-shadow-lg">
+                  Manna <span className="text-[#EFAC20] drop-shadow-2xl">(만나)</span>
+                </h1>
+                <p className="text-lg md:text-xl lg:text-2xl mb-2 opacity-95 font-semibold">
+                  Bridging Global Passion to Korean Creativity
+                </p>
+              </div>
+              
+              <p className="text-base md:text-lg lg:text-xl mb-8 opacity-95 font-medium leading-relaxed">
+                Instant, transparent, and low-fee fan-to-creator payments powered by KRW Stablecoin. 
+                Eliminate the 15-30% fees that drain creator earnings.
               </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link 
+                  href="/user-profile"
+                  className="group bg-[#EFAC20] text-[#144489] px-6 py-3 rounded-xl font-bold text-base hover:bg-[#f4c050] transition-all duration-300 flex items-center justify-center border-2 border-transparent hover:border-[#f4c050]"
+                >
+                  Try Prototype 
+                  <ArrowRight className="ml-2" size={18} />
+                </Link>
+                <button 
+                  onClick={() => scrollToSection('roadmap')}
+                  className="group border-2 border-white text-white px-6 py-3 rounded-xl font-bold text-base hover:bg-white hover:text-[#144489] transition-all duration-300"
+                >
+                  Learn More
+                </button>
+              </div>
             </div>
             
-            <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto opacity-95 font-medium leading-relaxed">
-              Instant, transparent, and low-fee fan-to-creator payments powered by KRW Stablecoin. 
-              Eliminate the 15-30% fees that drain creator earnings.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button 
-                onClick={() => scrollToSection('demo')}
-                className="group bg-[#EFAC20] text-[#144489] px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#f4c050] transition-all duration-300 flex items-center justify-center border-2 border-transparent hover:border-[#f4c050]"
-              >
-                Try Prototype 
-                <ArrowRight className="ml-2" size={20} />
-              </button>
-              <button 
-                onClick={() => scrollToSection('roadmap')}
-                className="group border-2 border-white text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white hover:text-[#144489] transition-all duration-300"
-              >
-                Learn More
-              </button>
+            {/* Right Side - Hero Image */}
+            <div className="flex justify-center lg:justify-end">
+              <div className="relative">
+                <img 
+                  src="/hero-img.png" 
+                  alt="Global fans supporting Korean creators through Manna" 
+                  className="w-full max-w-lg lg:max-w-xl xl:max-w-2xl rounded-2xl shadow-2xl"
+                />
+                {/* Subtle glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#EFAC20]/20 to-transparent rounded-2xl -z-10 blur-xl"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -187,7 +171,7 @@ export default function MannaLandingPage() {
       </section>
 
       {/* Executive Summary */}
-      <section className="py-20 px-8 md:px-12 lg:px-16 bg-gradient-to-b from-white to-gray-50">
+      <section className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-6xl mx-auto text-center">
           <AnimatedSection>
             <h2 className="text-3xl md:text-4xl font-bold text-[#144489] mb-6 leading-tight">
@@ -200,28 +184,26 @@ export default function MannaLandingPage() {
             </p>
           </AnimatedSection>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {[
               { icon: Zap, title: "Instant Transfers", desc: "Payments arrive in seconds, not weeks" },
               { icon: Eye, title: "Transparent", desc: "See exactly where your money goes" },
               { icon: Globe, title: "Global Access", desc: "Support Korean artists, musicians, streamers, and educators from anywhere in the world" }
-            ].map(({ icon: Icon, title, desc }, index) => (
-              <AnimatedCard key={title} index={index} className="group">
-                <div className="bg-white rounded-2xl p-8 hover:bg-gradient-to-br hover:from-white hover:to-gray-50 hover:shadow-2xl hover:shadow-[#144489]/10 transition-all duration-300 border border-gray-100 hover:border-[#EFAC20]/30">
-                  <div className="w-20 h-20 bg-gradient-to-br from-[#EFAC20] to-[#f4c050] rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:rotate-12 group-hover:scale-110 transition-all duration-300 shadow-lg group-hover:shadow-xl">
-                    <Icon size={36} className="text-white group-hover:scale-110 transition-transform duration-300" />
-                  </div>
-                  <h3 className="text-xl font-bold text-[#144489] mb-3 group-hover:text-[#1a5ba8] transition-colors duration-300">{title}</h3>
-                  <p className="text-gray-600 leading-relaxed font-medium">{desc}</p>
+            ].map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="bg-white rounded-2xl p-8 border border-gray-100 shadow-lg">
+                <div className="w-20 h-20 bg-gradient-to-br from-[#EFAC20] to-[#f4c050] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                  <Icon size={36} className="text-white" />
                 </div>
-              </AnimatedCard>
+                <h3 className="text-xl font-bold text-[#144489] mb-3">{title}</h3>
+                <p className="text-gray-600 leading-relaxed font-medium">{desc}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Problem Section */}
-      <section id="problem" className="py-20 px-6 bg-gradient-to-br from-red-50 to-orange-50">
+      <section id="problem" className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gradient-to-br from-blue-50 to-[#144489]/5">
         <div className="max-w-6xl mx-auto">
           <AnimatedSection className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-[#144489] mb-4 leading-tight">
@@ -232,7 +214,7 @@ export default function MannaLandingPage() {
             </p>
           </AnimatedSection>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {[
               {
                 icon: DollarSign,
@@ -252,21 +234,19 @@ export default function MannaLandingPage() {
                 stat: "Zero visibility",
                 desc: "Fans can't see how much actually reaches Korean artists, musicians, streamers, and educators, undermining trust and the personal connection."
               }
-            ].map(({ icon: Icon, title, stat, desc }, index) => (
-              <AnimatedCard key={title} index={index} className="group">
-                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl hover:shadow-red-200/50 transition-all duration-300 border border-red-100 hover:border-red-300 hover:bg-gradient-to-br hover:from-white hover:to-red-50">
-                  <div className="flex items-center mb-6">
-                    <div className="w-16 h-16 bg-gradient-to-br from-red-100 to-red-200 rounded-2xl flex items-center justify-center mr-4 group-hover:bg-gradient-to-br group-hover:from-red-200 group-hover:to-red-300 transition-all duration-300 shadow-md group-hover:shadow-lg">
-                      <Icon size={28} className="text-red-600 group-hover:scale-110 transition-transform duration-300" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-[#144489] mb-1">{title}</h3>
-                      <p className="text-red-600 font-bold text-2xl group-hover:text-red-700 transition-colors duration-300">{stat}</p>
-                    </div>
+            ].map(({ icon: Icon, title, stat, desc }) => (
+              <div key={title} className="bg-white rounded-2xl p-8 shadow-lg border border-red-100">
+                <div className="flex items-center mb-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-red-100 to-red-200 rounded-2xl flex items-center justify-center mr-4 shadow-md">
+                    <Icon size={28} className="text-red-600" />
                   </div>
-                  <p className="text-gray-700 leading-relaxed font-medium">{desc}</p>
+                  <div>
+                    <h3 className="text-xl font-bold text-[#144489] mb-1">{title}</h3>
+                    <p className="text-red-600 font-bold text-2xl">{stat}</p>
+                  </div>
                 </div>
-              </AnimatedCard>
+                <p className="text-gray-700 leading-relaxed font-medium">{desc}</p>
+              </div>
             ))}
           </div>
         </div>
@@ -276,13 +256,13 @@ export default function MannaLandingPage() {
 
 
       {/* Roadmap Section */}
-      <section id="roadmap" className="py-20 px-8 md:px-12 lg:px-16 bg-gray-50">
+      <section id="roadmap" className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#144489] mb-4">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#144489] mb-4">
               Strategic Roadmap
             </h2>
-            <p className="text-[#EFAC20] text-lg font-semibold">
+            <p className="text-[#EFAC20] text-base md:text-lg font-semibold">
               From creator bridge to universal K-culture economy
             </p>
           </div>
@@ -330,7 +310,7 @@ export default function MannaLandingPage() {
                         </span>
 
                       </div>
-                      <h3 className={`text-xl font-bold mb-3 ${phase.status === 'current' ? 'text-white' : 'text-[#144489]'}`}>
+                      <h3 className={`text-lg font-bold mb-3 ${phase.status === 'current' ? 'text-white' : 'text-[#144489]'}`}>
                         {phase.title}
                       </h3>
                       <p className={`mb-4 ${phase.status === 'current' ? 'text-gray-200' : 'text-gray-600'}`}>
@@ -363,7 +343,7 @@ export default function MannaLandingPage() {
       </section>
 
        {/* Market Opportunity */}
-       <section id="market" className="py-20 px-6">
+       <section id="market" className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-[#144489] mb-4">
@@ -374,7 +354,7 @@ export default function MannaLandingPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12">
             {[
               {
                 icon: Users,
@@ -415,7 +395,7 @@ export default function MannaLandingPage() {
       </section>
 
       {/* Business Model */}
-      <section className="py-20 px-6 bg-gray-50">
+      <section className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-[#144489] mb-4">
@@ -426,7 +406,7 @@ export default function MannaLandingPage() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             <div className="bg-white rounded-2xl p-8 shadow-lg">
               <h3 className="text-2xl font-bold text-[#144489] mb-6">Traditional Platforms</h3>
               <div className="space-y-4">
@@ -483,91 +463,7 @@ export default function MannaLandingPage() {
       </section>
 
 
-      {/* Demo Preview */}
-      <section id="demo" className="py-20 px-8 md:px-12 lg:px-16 bg-gradient-to-br from-gray-50 to-blue-50">
-        <div className="max-w-4xl mx-auto">
-          <AnimatedSection className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#144489] mb-4 leading-tight">
-              Live Prototype Demo
-            </h2>
-            <p className="text-[#EFAC20] text-lg font-bold text-xl mb-8">
-              Experience instant KRW-S transfers on Kaia Testnet
-            </p>
-          </AnimatedSection>
 
-          <div className="group">
-            <div className="bg-white rounded-2xl shadow-2xl p-8 border-2 border-[#144489]/10 hover:border-[#EFAC20]/50 transition-all duration-300">
-              <div className="grid lg:grid-cols-2 gap-8">
-                {/* Mock Creator Profile */}
-                <div className="text-center">
-                  <div className="w-28 h-28 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-[#EFAC20] to-[#f4c050] flex items-center justify-center shadow-lg">
-                    <span className="text-4xl">🎨</span>
-                  </div>
-                  <h3 className="text-2xl font-bold text-[#144489] mb-3">Artist Kim (김작가)</h3>
-                  <p className="text-gray-700 mb-6 font-medium">Independent Webtoon Artist</p>
-                  <div className="bg-gradient-to-r from-[#144489] to-[#1a5ba8] text-white p-6 rounded-2xl shadow-md">
-                    <p className="text-sm opacity-90 mb-1 font-medium">Current Balance</p>
-                    <p className="text-3xl font-bold">₩150,000 KRW-S</p>
-                    <p className="text-xs opacity-75 mt-2 font-medium">Updates in real-time</p>
-                  </div>
-                </div>
-
-                                 {/* Mock Tip Interface */}
-                 <div>
-                   <h4 className="text-lg font-bold text-[#144489] mb-6 flex items-center">
-                     <Zap className="mr-2 text-[#EFAC20]" size={24} />
-                     Send Support
-                   </h4>
-                   <div className="space-y-4">
-                     <div className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl hover:bg-blue-100 hover:border-blue-300 transition-all duration-200">
-                       <div className="flex items-center">
-                         <Wallet className="mr-2 text-[#144489]" size={18} />
-                         <span className="text-sm text-[#144489] font-semibold">Connect wallet to begin</span>
-                       </div>
-                     </div>
-                     <div>
-                       <label className="block text-sm font-bold text-gray-800 mb-3">Tip Amount (KRW-S)</label>
-                       <input 
-                         type="text" 
-                         placeholder="Enter amount (e.g., 1000)" 
-                         className="w-full p-4 border-2 border-gray-300 rounded-xl hover:border-[#EFAC20] focus:border-[#144489] focus:ring-4 focus:ring-[#144489]/20 transition-all duration-200 placeholder-gray-500 text-gray-900 font-semibold"
-                         disabled={true}
-                       />
-                     </div>
-                     <div>
-                       <p className="text-sm text-gray-800 mb-4 font-bold">Quick Tips:</p>
-                       <div className="grid grid-cols-3 gap-3">
-                         {['₩1,000', '₩5,000', '₩10,000'].map((amount) => (
-                           <button key={amount} className="p-4 border-2 border-[#EFAC20] text-[#EFAC20] rounded-xl text-sm font-bold hover:bg-[#EFAC20] hover:text-white transition-all duration-200">
-                             {amount}
-                           </button>
-                         ))}
-                       </div>
-                     </div>
-                     <button className="w-full bg-gradient-to-r from-[#144489] to-[#1a5ba8] text-white p-5 rounded-xl font-bold hover:from-[#1a5ba8] hover:to-[#144489] transition-all duration-300 flex items-center justify-center text-lg">
-                       <Zap className="mr-3" size={20} />
-                       Send Tip
-                     </button>
-                   </div>
-                 </div>
-              </div>
-
-              <div className="mt-8 text-center">
-                <a 
-                  href="/user-profile" 
-                  className="group inline-flex items-center bg-[#EFAC20] text-[#144489] px-6 py-3 rounded-lg font-bold hover:bg-[#f4c050] transition-all duration-300"
-                >
-                  Try Full Demo 
-                  <ArrowRight className="ml-2" size={20} />
-                </a>
-                <p className="text-sm text-gray-500 mt-2">
-                  Connect wallet once, use across all pages
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Footer */}
       <AnimatedSection>
