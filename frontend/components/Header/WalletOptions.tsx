@@ -10,6 +10,10 @@ export default function WalletOptions() {
   const { disconnect } = useDisconnect();
   const [showOptions, setShowOptions] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [expandedSections, setExpandedSections] = useState({
+    digitalAssets: false,
+    newWayToLogin: false
+  });
 
   // Ensure component only renders on client side to prevent hydration mismatch
   useEffect(() => {
@@ -20,6 +24,13 @@ export default function WalletOptions() {
   const handleConnect = (connector: any) => {
     connect({ connector });
     setShowOptions(false);
+  };
+
+  const toggleSection = (section: 'digitalAssets' | 'newWayToLogin') => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
   };
 
   const handleDisconnect = () => {
@@ -152,14 +163,14 @@ export default function WalletOptions() {
         </svg>
       </button>
 
-      {showOptions && (
-        <div className="absolute top-full right-0 mt-2 w-[500px] bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-          <div className="p-3 border-b border-gray-200">
-            <h4 className="text-sm font-semibold text-gray-900">Connect Wallet</h4>
-          </div>
-          <div className="flex">
+              {showOptions && (
+          <div className="absolute top-full right-0 mt-2 w-[320px] md:w-[500px] bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+            <div className="p-3 border-b border-gray-200">
+              <h4 className="text-sm font-semibold text-gray-900">Connect Wallet</h4>
+            </div>
+            <div className="flex flex-col md:flex-row">
             {/* Left Column - Wallet Options */}
-            <div className="w-1/2 p-2 border-r border-gray-200">
+            <div className="w-full md:w-1/2 p-2 md:border-r border-gray-200">
               <div className="text-xs font-medium text-gray-500 mb-2 px-1">Installed</div>
               
               {/* Kaia Recommendation */}
@@ -227,7 +238,9 @@ export default function WalletOptions() {
             </div>
 
                         {/* Right Column - What is a Wallet? */}
-            <div className="w-1/2 p-2">
+            <div className="w-full md:w-1/2 p-2">
+              {/* Mobile divider */}
+              <div className="md:hidden border-t border-gray-200 mb-3"></div>
               <h5 className="text-xs font-semibold text-gray-900 mb-3">What is a Wallet?</h5>
               
               {/* A Home for your Digital Assets */}
@@ -239,9 +252,28 @@ export default function WalletOptions() {
                       <circle cx="12" cy="12" r="3" fill="currentColor"/>
                     </svg>
                   </div>
-                  <div>
-                    <p className="text-xs font-medium text-gray-900">A Home for your Digital Assets</p>
-                    <p className="text-xs text-gray-600">Wallets are used to send, receive, store, and display digital assets like Ethereum and NFTs.</p>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-medium text-gray-900">A Home for your Digital Assets</p>
+                      <button
+                        onClick={() => toggleSection('digitalAssets')}
+                        className="md:hidden p-1 hover:bg-gray-100 rounded transition-colors"
+                      >
+                        <svg 
+                          width="12" 
+                          height="12" 
+                          viewBox="0 0 24 24" 
+                          fill="none" 
+                          xmlns="http://www.w3.org/2000/svg"
+                          className={`transition-transform duration-200 ${expandedSections.digitalAssets ? 'rotate-180' : ''}`}
+                        >
+                          <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </button>
+                    </div>
+                    <div className={`transition-all duration-200 overflow-hidden ${expandedSections.digitalAssets ? 'max-h-20 opacity-100' : 'max-h-0 opacity-0'} md:max-h-20 md:opacity-100`}>
+                      <p className="text-xs text-gray-600 mt-1">Wallets are used to send, receive, store, and display digital assets like Ethereum and NFTs.</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -254,9 +286,28 @@ export default function WalletOptions() {
                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
                     </svg>
                   </div>
-                  <div>
-                    <p className="text-xs font-medium text-gray-900">A New Way to Log In</p>
-                    <p className="text-xs text-gray-600">Instead of creating new accounts and passwords on every website, just connect your wallet.</p>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-medium text-gray-900">A New Way to Log In</p>
+                      <button
+                        onClick={() => toggleSection('newWayToLogin')}
+                        className="md:hidden p-1 hover:bg-gray-100 rounded transition-colors"
+                      >
+                        <svg 
+                          width="12" 
+                          height="12" 
+                          viewBox="0 0 24 24" 
+                          fill="none" 
+                          xmlns="http://www.w3.org/2000/svg"
+                          className={`transition-transform duration-200 ${expandedSections.newWayToLogin ? 'rotate-180' : ''}`}
+                        >
+                          <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </button>
+                    </div>
+                    <div className={`transition-all duration-200 overflow-hidden ${expandedSections.newWayToLogin ? 'max-h-20 opacity-100' : 'max-h-0 opacity-0'} md:max-h-20 md:opacity-100`}>
+                      <p className="text-xs text-gray-600 mt-1">Instead of creating new accounts and passwords on every website, just connect your wallet.</p>
+                    </div>
                   </div>
                 </div>
               </div>
