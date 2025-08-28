@@ -188,7 +188,7 @@ export default function MannaLandingPage() {
             {[
               { icon: Zap, title: "Instant Support", desc: "Support arrives in seconds, not weeks" },
               { icon: Eye, title: "Transparent", desc: "See exactly where your money goes" },
-              { icon: Globe, title: "Global Access", desc: "Support Korean artists, musicians, streamers, and educators from anywhere in the world" }
+              { icon: Globe, title: "Global Access", desc: "Support your Favourite Korean creators,artists, musicians, streamers, and educators from anywhere in the world" }
             ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="bg-white rounded-2xl p-8 border border-gray-100 shadow-lg">
                 <div className="w-20 h-20 bg-gradient-to-br from-[#EFAC20] to-[#f4c050] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
@@ -210,7 +210,7 @@ export default function MannaLandingPage() {
               The Broken System for Global Passion
             </h2>
             <p className="text-[#EFAC20] text-lg font-bold text-xl">
-              Current payment methods are failing Korean artists, musicians, streamers, and educators
+              Current payment methods are failing Korean creators,artists, musicians, streamers, and educators
             </p>
           </AnimatedSection>
 
@@ -220,19 +220,19 @@ export default function MannaLandingPage() {
                 icon: DollarSign,
                 title: "Exorbitant Fees",
                 stat: "15-30%",
-                desc: "Traditional payment processors charge massive fees, with Korean artists, musicians, streamers, and educators losing up to 40% of fan support to intermediaries."
+                desc: "Traditional payment processors charge massive fees, with Korean creators, artists, musicians, streamers, and educators losing up to 40% of fan support to intermediaries."
               },
               {
                 icon: Clock,
                 title: "Slow Settlements",
                 stat: "3-14 days",
-                desc: "International wire transfers take weeks to clear, creating severe cash flow problems for independent Korean artists, musicians, streamers, and educators."
+                desc: "International wire transfers take weeks to clear, creating severe cash flow problems for independent Korean creators, artists, musicians, streamers, and educators."
               },
               {
                 icon: Eye,
                 title: "Opaque Systems",
                 stat: "Zero visibility",
-                desc: "Fans can't see how much actually reaches Korean artists, musicians, streamers, and educators, undermining trust and the personal connection."
+                desc: "Fans can't see how much actually reaches Korean creators, artists, musicians, streamers, and educators, undermining trust and the personal connection."
               }
             ].map(({ icon: Icon, title, stat, desc }) => (
               <div key={title} className="bg-white rounded-2xl p-8 shadow-lg border border-red-100">

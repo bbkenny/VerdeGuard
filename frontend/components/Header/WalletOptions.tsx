@@ -158,6 +158,32 @@ export default function WalletOptions() {
             <h4 className="text-sm font-semibold text-gray-900">Connect Wallet</h4>
           </div>
           <div className="p-2">
+            {/* Kaikas Recommendation */}
+            <div className="mb-3 p-3 bg-gradient-to-r from-[#144489]/10 to-[#EFAC20]/10 border border-[#144489]/20 rounded-lg">
+              <div className="flex items-center space-x-3 mb-2">
+                <div className="w-8 h-8 bg-[#144489] rounded-lg flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">K</span>
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-[#144489]">Recommended for Kaia</p>
+                  <p className="text-xs text-gray-600">Official Klaytn wallet</p>
+                </div>
+              </div>
+              <a
+                href="https://chrome.google.com/webstore/detail/kaikas/jblndlipeogpafnldhgmapagcccfchpi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex items-center justify-center space-x-2 px-3 py-2 bg-[#144489] text-white text-sm font-medium rounded-lg hover:bg-[#1a5ba8] transition-colors"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <polyline points="15,3 21,3 21,9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <line x1="10" y1="14" x2="21" y2="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Install Kaikas
+              </a>
+            </div>
+            
             {connectors.map((connector) => (
               <button
                 key={connector.uid}

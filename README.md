@@ -45,7 +45,7 @@ For details on the KRW Stablecoin smart contract, please refer to the [Smart Con
 
 ## Tech Stack (Phase 1 Prototype)
 
-- **Blockchain:** Kaia Testnet (Baobab)
+- **Blockchain:** Kaia Testnet
 - **Frontend:** Next.js (TypeScript, Tailwind CSS)
 - **Web3 Library:** Wagmi
 - **Wallet Integration:** Kaikas / MetaMask

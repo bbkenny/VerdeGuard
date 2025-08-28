@@ -57,7 +57,7 @@ const UserProfile = () => {
   const [tipAmount, setTipAmount] = useState("");
   const [creatorAddress, setCreatorAddress] = useState<string>(CREATOR_ADDRESS);
   const [transactionStatus, setTransactionStatus] = useState("");
-  const [transactionHash] = useState<`0x${string}` | null>(null);
+
   const [showSuccess, setShowSuccess] = useState(false);
   const [recentTips, setRecentTips] = useState<TipTransaction[]>([]);
   const [balanceAnimation, setBalanceAnimation] = useState(false);
@@ -119,17 +119,42 @@ const UserProfile = () => {
   });
 
   // Write function to transfer KRW-S
-  const { writeContract, isPending: isTransferPending } = useWriteContract();
+  const { writeContract, isPending: isTransferPending, data: writeData } = useWriteContract();
 
-  // Transaction status
-  const { isSuccess: isConfirmed } = useTransaction({
-    hash: transactionHash || undefined,
-  });
+
 
   useEffect(() => {
     // Trigger entrance animations on load
     setAnimationClass('animate-fadeInUp');
   }, []);
+
+  // Handle successful transaction when writeData changes
+  useEffect(() => {
+    if ((writeData as any)?.hash) {
+      // Transaction was submitted successfully
+      setTransactionStatus("Tip sent successfully! 🎉");
+      setShowSuccess(true);
+      setBalanceAnimation(true);
+      
+      // Add to recent tips
+      const newTip: TipTransaction = {
+        from: formatAddress(address),
+        amount: tipAmount,
+        timestamp: new Date().toLocaleTimeString(),
+        hash: (writeData as any)?.hash || "Transaction completed"
+      };
+      setRecentTips(prev => [newTip, ...prev.slice(0, 4)]);
+      
+      setTipAmount("");
+      refetchCreatorBalance();
+      
+      setTimeout(() => {
+        setTransactionStatus("");
+        setShowSuccess(false);
+        setBalanceAnimation(false);
+      }, 5000);
+    }
+  }, [writeData, tipAmount, address, refetchCreatorBalance]);
 
 
 
@@ -143,6 +168,21 @@ const UserProfile = () => {
   const formatBalance = (balance: bigint | undefined): string => {
     if (!balance) return "0";
     return formatUnits(balance, 18);
+  };
+
+  const getUserBalanceDisplay = (): string => {
+    if (!userBalance) return "0";
+    return Math.floor(parseFloat(formatBalance(userBalance as bigint))).toLocaleString();
+  };
+
+  const hasSufficientBalance = (amount: string): boolean => {
+    if (!userBalance || !amount) return false;
+    try {
+      const amountInWei = parseUnits(amount, 18);
+      return amountInWei <= (userBalance as bigint);
+    } catch {
+      return false;
+    }
   };
 
   const formatAddress = (addr: string | undefined): string => {
@@ -176,8 +216,8 @@ const UserProfile = () => {
   };
 
   const handleTip = async () => {
-    if (!isConnected || !tipAmount || !creatorAddress || !writeContract) {
-      setTransactionStatus("Please connect wallet, enter a valid amount, and creator address.");
+    if (!tipAmount || !creatorAddress) {
+      setTransactionStatus("Please enter a valid amount and creator address.");
       return;
     }
 
@@ -186,15 +226,40 @@ const UserProfile = () => {
       return;
     }
 
+    if (!isConnected) {
+      setTransactionStatus("Please connect your wallet first.");
+      return;
+    }
+
+    if (isWrongNetwork) {
+      setTransactionStatus("Please switch to Kaia Baobab testnet.");
+      return;
+    }
+
+    if (!writeContract) {
+      setTransactionStatus("Wallet not ready. Please try again.");
+      return;
+    }
+
     try {
       const amountInWei = parseUnits(tipAmount, 18);
+      
+      // Check if user has sufficient balance
+      if (userBalance && amountInWei > (userBalance as bigint)) {
+        setTransactionStatus("Insufficient balance. Please check your KRW-S balance.");
+        return;
+      }
+
+      // This will trigger the wallet popup
       writeContract({
         address: MANNA_CONTRACT_ADDRESS,
         abi: MANNA_ABI,
         functionName: 'transfer',
         args: [creatorAddress as `0x${string}`, amountInWei],
       });
-      setTransactionStatus("Sending tip...");
+      
+      setTransactionStatus("Transaction submitted! Please confirm in your wallet.");
+      
     } catch (error: unknown) {
       console.error("Error sending tip:", error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
@@ -202,35 +267,10 @@ const UserProfile = () => {
     }
   };
 
-  // Handle transaction status updates
-  useEffect(() => {
-    if (isConfirmed) {
-      setTransactionStatus("Tip sent successfully! 🎉");
-      setShowSuccess(true);
-      setBalanceAnimation(true);
-      
-      // Add to recent tips (mock data for demo)
-      const newTip: TipTransaction = {
-        from: formatAddress(address),
-        amount: tipAmount,
-        timestamp: new Date().toLocaleTimeString(),
-        hash: transactionHash || ""
-      };
-      setRecentTips(prev => [newTip, ...prev.slice(0, 4)]);
-      
-      setTipAmount("");
-      refetchCreatorBalance();
-      
-      setTimeout(() => {
-        setTransactionStatus("");
-        setShowSuccess(false);
-        setBalanceAnimation(false);
-      }, 5000);
-    }
-  }, [isConfirmed, tipAmount, address, refetchCreatorBalance, transactionHash]);
+
 
   const isWrongNetwork = isConnected && chain?.id !== KAIA_BAOBAB_CHAIN_ID;
-  const canSendTip = isConnected && !isWrongNetwork && tipAmount && creatorAddress && creatorAddress.length === 42 && !isTransferPending;
+  const canSendTip = tipAmount && creatorAddress && creatorAddress.length === 42 && !isTransferPending;
 
   const TabButton = ({ id, label, icon: Icon, isActive, onClick }: { id: string; label: string; icon: React.ComponentType<{ size?: number; className?: string }>; isActive: boolean; onClick: (id: string) => void }) => (
     <button
@@ -289,17 +329,7 @@ const UserProfile = () => {
                 </div>
               </div>
 
-              {/* Quick Stats */}
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <div className="text-center p-3 bg-gradient-to-r from-[#144489]/5 to-[#144489]/10 rounded-lg hover:shadow-md transition-all">
-                  <p className="text-lg font-bold text-[#144489]">{mockStats.creatorsSupported}</p>
-                  <p className="text-xs text-gray-600">Creators</p>
-                </div>
-                <div className="text-center p-3 bg-gradient-to-r from-[#EFAC20]/5 to-[#EFAC20]/10 rounded-lg hover:shadow-md transition-all">
-                                          <p className="text-lg font-bold text-[#EFAC20]">₩{(mockStats.totalGifted / 1000)}K</p>
-                                      <p className="text-xs text-gray-600">Gifted</p>
-                </div>
-              </div>
+
 
               {/* Wallet Info */}
               <div className="mb-6">
@@ -394,6 +424,21 @@ const UserProfile = () => {
                     Send Gift (KRW-S)
                   </h2>
 
+                  {/* User Balance Display */}
+                  {isConnected && (
+                    <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <Check className="text-green-600 mr-2" size={20} />
+                          <span className="text-green-700 font-medium">Your Balance</span>
+                        </div>
+                        <span className="text-sm text-gray-600">
+                          ₩{getUserBalanceDisplay()} KRW-S
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
 
 
                   {/* Creator Address Input */}
@@ -408,7 +453,7 @@ const UserProfile = () => {
                       placeholder="Enter creator's wallet address (0x...)"
                       value={creatorAddress}
                       onChange={(e) => setCreatorAddress(e.target.value as string)}
-                      disabled={!isConnected || isWrongNetwork}
+                      disabled={false}
                     />
                     <p className="text-sm text-gray-500 mt-1">
                       Enter the wallet address of the creator you want to tip
@@ -427,7 +472,7 @@ const UserProfile = () => {
                       placeholder="Enter amount (e.g., 1000)"
                       value={tipAmount}
                       onChange={(e) => setTipAmount(e.target.value)}
-                      disabled={!isConnected || isWrongNetwork}
+                      disabled={false}
                     />
                   </div>
 
@@ -439,7 +484,7 @@ const UserProfile = () => {
                         <button
                           key={amount}
                           onClick={() => handleQuickTip(amount)}
-                          disabled={!isConnected || isWrongNetwork}
+                          disabled={false}
                           className="px-4 py-3 border-2 border-[#EFAC20] text-[#EFAC20] rounded-lg hover:bg-[#EFAC20] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-bold text-base"
                         >
                           ₩{amount.toLocaleString()}
@@ -477,21 +522,6 @@ const UserProfile = () => {
                         : "bg-blue-50 text-blue-700 border border-blue-200"
                     }`}>
                       <p className="font-medium">{transactionStatus}</p>
-                      {transactionHash && (
-                        <div className="flex items-center justify-between mt-2">
-                          <p className="text-xs">
-                            TX: {transactionHash.slice(0, 10)}...{transactionHash.slice(-8)}
-                          </p>
-                          <a 
-                            href={`https://baobab.klaytnscope.com/tx/${transactionHash}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-xs flex items-center hover:underline"
-                          >
-                            View on Explorer <ExternalLink size={12} className="ml-1" />
-                          </a>
-                        </div>
-                      )}
                     </div>
                   )}
                 </div>
@@ -795,11 +825,11 @@ const UserProfile = () => {
 
       {/* Success Modal */}
       {showSuccess && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-8 rounded-2xl text-center max-w-md mx-4 relative overflow-hidden">
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[9999] backdrop-blur-sm">
+          <div className="bg-white p-8 rounded-2xl text-center max-w-md mx-4 relative overflow-hidden shadow-2xl border border-gray-200">
             <div className="absolute inset-0 bg-gradient-to-br from-[#144489]/5 to-[#EFAC20]/5"></div>
             <div className="relative">
-              <div className="text-6xl mb-4">🎉</div>
+              <div className="text-6xl mb-4 animate-bounce">🎉</div>
               <h3 className="text-2xl font-bold text-[#144489] mb-2">Tip Sent Successfully!</h3>
               <p className="text-gray-600 mb-4">Your support arrived instantly to the creator</p>
               <div className="flex items-center justify-center space-x-4 text-sm text-gray-500">
