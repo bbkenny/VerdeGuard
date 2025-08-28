@@ -9,6 +9,12 @@ export default function WalletOptions() {
   const { connectors, connect } = useConnect();
   const { disconnect } = useDisconnect();
   const [showOptions, setShowOptions] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Ensure component only renders on client side to prevent hydration mismatch
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleConnect = (connector: any) => {
@@ -38,6 +44,20 @@ export default function WalletOptions() {
       document.removeEventListener('click', handleClickOutside);
     };
   }, [showOptions]);
+
+  // Don't render anything until mounted on client
+  if (!isMounted) {
+    return (
+      <div className="relative wallet-options">
+        <button
+          className="flex items-center space-x-1 sm:space-x-2 px-3 sm:px-4 py-2 bg-[#144489] text-white rounded-lg hover:bg-[#1a5ba8] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#144489] focus:ring-offset-2"
+        >
+          <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+          <span className="text-xs sm:text-sm font-medium">Loading...</span>
+        </button>
+      </div>
+    );
+  }
 
   if (isConnected) {
     return (
@@ -102,7 +122,7 @@ export default function WalletOptions() {
 
   return (
     <div className="relative wallet-options">
-              <button
+      <button
         onClick={() => setShowOptions(!showOptions)}
         className="flex items-center space-x-1 sm:space-x-2 px-3 sm:px-4 py-2 bg-[#144489] text-white rounded-lg hover:bg-[#1a5ba8] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#144489] focus:ring-offset-2"
       >

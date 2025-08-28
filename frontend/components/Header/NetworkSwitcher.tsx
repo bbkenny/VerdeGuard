@@ -1,16 +1,40 @@
 "use client";
 
-import { supportedNetworks } from '@/config';
+import { supportedNetworks } from '../../config';
 import * as React from 'react';
 import { useAccount, useSwitchChain, useChainId } from 'wagmi';
 
 const NetworkSwitcher = () => {
   const [isOpen, setIsOpen] = React.useState(false);
+  const [isMounted, setIsMounted] = React.useState(false);
   const { isConnected } = useAccount();
   const { switchChain, isPending } = useSwitchChain();
   const chainId = useChainId();
 
   const currentNetwork = supportedNetworks.find(network => network.id === chainId);
+
+  // Ensure component only renders on client side
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Close dropdown when clicking outside
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.network-switcher')) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('click', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [isOpen]);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -28,24 +52,12 @@ const NetworkSwitcher = () => {
     closeDropdown();
   };
 
-  // Close dropdown when clicking outside
-  React.useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      if (!target.closest('.network-switcher')) {
-        closeDropdown();
-      }
-    };
+  // Don't render anything until mounted on client
+  if (!isMounted) {
+    return null;
+  }
 
-    if (isOpen) {
-      document.addEventListener('click', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, [isOpen]);
-
+  // Don't render if not connected
   if (!isConnected) {
     return null;
   }

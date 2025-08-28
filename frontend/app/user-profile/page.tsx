@@ -74,24 +74,24 @@ const UserProfile = () => {
   });
 
   const mockStats = {
-    totalTipped: 125000,
+    totalGifted: 125000,
     creatorsSupported: 18,
-    tipsSent: 47,
+    giftsSent: 47,
     favoriteCreators: 12
   };
 
   const mockTransactions = [
-    { id: 1, creator: 'Artist Kim', amount: 5000, date: '2024-08-25', type: 'tip' },
-    { id: 2, creator: 'Webtoon Studio', amount: 10000, date: '2024-08-24', type: 'tip' },
-    { id: 3, creator: 'Musician Lee', amount: 3000, date: '2024-08-23', type: 'tip' },
-    { id: 4, creator: 'Streamer Park', amount: 8000, date: '2024-08-22', type: 'tip' }
+    { id: 1, creator: 'Artist Kim', amount: 5000, date: '2024-08-25', type: 'gift' },
+    { id: 2, creator: 'Webtoon Studio', amount: 10000, date: '2024-08-24', type: 'gift' },
+    { id: 3, creator: 'Musician Lee', amount: 3000, date: '2024-08-23', type: 'gift' },
+    { id: 4, creator: 'Streamer Park', amount: 8000, date: '2024-08-22', type: 'gift' }
   ];
 
   const mockCreators = [
-    { name: 'Artist Kim', category: 'Illustration', avatar: '🎨', tipped: 15000 },
-    { name: 'Musician Lee', category: 'Music', avatar: '🎵', tipped: 12000 },
-    { name: 'Webtoon Studio', category: 'Comics', avatar: '📚', tipped: 25000 },
-    { name: 'Streamer Park', category: 'Gaming', avatar: '🎮', tipped: 8000 }
+    { name: 'Artist Kim', category: 'Illustration', avatar: '🎨', gifted: 15000 },
+    { name: 'Musician Lee', category: 'Music', avatar: '🎵', gifted: 12000 },
+    { name: 'Webtoon Studio', category: 'Comics', avatar: '📚', gifted: 25000 },
+    { name: 'Streamer Park', category: 'Gaming', avatar: '🎮', gifted: 8000 }
   ];
 
   const userAddress = "0x742d35Cc6Bb1332046c003e036Cd2Da7d2E2aD7C";
@@ -296,8 +296,8 @@ const UserProfile = () => {
                   <p className="text-xs text-gray-600">Creators</p>
                 </div>
                 <div className="text-center p-3 bg-gradient-to-r from-[#EFAC20]/5 to-[#EFAC20]/10 rounded-lg hover:shadow-md transition-all">
-                  <p className="text-lg font-bold text-[#EFAC20]">₩{(mockStats.totalTipped / 1000)}K</p>
-                  <p className="text-xs text-gray-600">Tipped</p>
+                                          <p className="text-lg font-bold text-[#EFAC20]">₩{(mockStats.totalGifted / 1000)}K</p>
+                                      <p className="text-xs text-gray-600">Gifted</p>
                 </div>
               </div>
 
@@ -517,10 +517,10 @@ const UserProfile = () => {
                 {/* Recent Activity */}
                 {recentTips.length > 0 && (
                   <div className="bg-white rounded-2xl shadow-lg p-6">
-                    <h3 className="text-xl font-bold text-[#144489] mb-4 flex items-center">
-                      <TrendingUp className="mr-2 text-[#EFAC20]" size={24} />
-                      Recent Tips
-                    </h3>
+                                          <h3 className="text-xl font-bold text-[#144489] mb-4 flex items-center">
+                        <TrendingUp className="mr-2 text-[#EFAC20]" size={24} />
+                        Recent Gifts
+                      </h3>
                     <div className="space-y-3">
                                               {recentTips.map((tip) => (
                           <div key={`tip-${tip.timestamp}`} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -677,13 +677,13 @@ const UserProfile = () => {
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="text-center p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl hover:shadow-md transition-all">
                       <Gift className="mx-auto mb-2 text-[#144489]" size={24} />
-                      <p className="text-2xl font-bold text-[#144489]">{mockStats.tipsSent}</p>
-                      <p className="text-sm text-gray-600">Tips Sent</p>
+                      <p className="text-2xl font-bold text-[#144489]">{mockStats.giftsSent}</p>
+                      <p className="text-sm text-gray-600">Gifts Sent</p>
                     </div>
                     <div className="text-center p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-xl hover:shadow-md transition-all">
                       <Heart className="mx-auto mb-2 text-[#EFAC20]" size={24} />
-                      <p className="text-2xl font-bold text-[#EFAC20]">₩{(mockStats.totalTipped / 1000)}K</p>
-                      <p className="text-sm text-gray-600">Total Tipped</p>
+                      <p className="text-2xl font-bold text-[#EFAC20]">₩{(mockStats.totalGifted / 1000)}K</p>
+                      <p className="text-sm text-gray-600">Total Gifted</p>
                     </div>
                     <div className="text-center p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-xl hover:shadow-md transition-all">
                       <Users className="mx-auto mb-2 text-green-600" size={24} />
@@ -716,7 +716,7 @@ const UserProfile = () => {
                             <Gift className="text-white" size={18} />
                           </div>
                           <div>
-                            <p className="font-semibold text-gray-800">Tipped {tx.creator}</p>
+                            <p className="font-semibold text-gray-800">Gifted {tx.creator}</p>
                             <p className="text-sm text-gray-500">{tx.date}</p>
                           </div>
                         </div>
@@ -751,8 +751,8 @@ const UserProfile = () => {
                             </div>
                           </div>
                           <div className="text-right">
-                            <p className="font-bold text-[#144489]">₩{creator.tipped.toLocaleString()}</p>
-                            <p className="text-xs text-gray-500">Total Tipped</p>
+                            <p className="font-bold text-[#144489]">₩{creator.gifted.toLocaleString()}</p>
+                            <p className="text-xs text-gray-500">Total Gifted</p>
                           </div>
                         </div>
                       </div>

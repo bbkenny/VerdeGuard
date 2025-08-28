@@ -12,10 +12,10 @@ Manna (만나) is a decentralized platform designed to revolutionize how global 
 
 This repository contains the proof-of-concept (PoC) for **Phase 1** of our vision, demonstrating the core fan-to-creator tipping functionality. While this prototype is focused, it is the first step in a much larger, multi-phase roadmap.
 
-## Live Demo & Pitch
+## Live Prototype & Resources
 
-- **Live Demo Link:** [https://mannas.vercel.app/] - *Experience the core functionality yourself!*
-- **Pitch Deck Link:** [https://docs.google.com/presentation/d/1qKJidCy1NT8JviqDgs9dH36ehSE499nY/edit?usp=sharing&ouid=100528488557506058575&rtpof=true&sd=true] - *Dive deeper into our vision, market, and business model.*
+- **Live Prototype:** [https://mannas.vercel.app/] - *Experience our Phase 1 prototype demonstrating core fan-to-creator support functionality!*
+- **Pitch Deck:** [https://docs.google.com/presentation/d/1qKJidCy1NT8JviqDgs9dH36ehSE499nY/edit?usp=sharing&ouid=100528488557506058575&rtpof=true&sd=true] - *Dive deeper into our vision, market, and business model.*
 - **Concept Document:** [https://docs.google.com/document/d/1I5fVrMsMLdSgmz3cI8YoEI8o7y8vWkBMGKT31-908u8/edit?usp=sharing] - *Comprehensive details of the project.*
 
 ## Our Long-Term Roadmap
@@ -29,18 +29,19 @@ Manna's journey unfolds in three strategic phases:
 ## Repository Structure
 
 This repository is organized into two main parts:
-- `/manna_frontend/`: Contains the Next.js frontend application.
-- `/smart_contract/`: Contains the Hardhat project for the smart contract.
+- `/frontend/`: Contains the Next.js frontend application with the Phase 1 prototype.
+- `/smart-contract/`: Contains the Hardhat project for the KRW-S stablecoin smart contract.
 
-For detailed instructions on running the frontend, please refer to the [Frontend README](./manna_frontend/README.md).
-For details on the KRW Stablecoin smart contract, please refer to the [Smart Contract README](./smart_contract/README.md).
+For detailed instructions on running the frontend prototype, please refer to the [Frontend README](./frontend/README.md).
+For details on the KRW Stablecoin smart contract, please refer to the [Smart Contract README](./smart-contract/README.md).
 
-## Tech Stack (for this PoC)
+## Tech Stack (Phase 1 Prototype)
 
 - **Blockchain:** Kaia Testnet (Baobab)
 - **Frontend:** Next.js (TypeScript, Tailwind CSS)
 - **Web3 Library:** Wagmi
 - **Wallet Integration:** Kaikas / MetaMask
+- **Smart Contract:** ERC-20 KRW-S Stablecoin
 
 ##  Curated By 
 Babalola Taiwo J
