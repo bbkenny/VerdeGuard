@@ -153,73 +153,136 @@ export default function WalletOptions() {
       </button>
 
       {showOptions && (
-        <div className="absolute top-full right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+        <div className="absolute top-full right-0 mt-2 w-[500px] bg-white border border-gray-200 rounded-lg shadow-lg z-50">
           <div className="p-3 border-b border-gray-200">
             <h4 className="text-sm font-semibold text-gray-900">Connect Wallet</h4>
           </div>
-          <div className="p-2">
-            {/* Kaikas Recommendation */}
-            <div className="mb-3 p-3 bg-gradient-to-r from-[#ABFF27]/10 to-black/5 border border-[#ABFF27]/20 rounded-lg">
-              <div className="flex items-center space-x-3 mb-2">
-                <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
-                  <img 
-                    src="/kaia.png" 
-                    alt="Kaia logo" 
-                    className="w-6 h-6 rounded"
-                  />
+          <div className="flex">
+            {/* Left Column - Wallet Options */}
+            <div className="w-1/2 p-2 border-r border-gray-200">
+              <div className="text-xs font-medium text-gray-500 mb-2 px-1">Installed</div>
+              
+              {/* Kaia Recommendation */}
+              <div className="mb-2 p-2 bg-gradient-to-r from-[#ABFF27]/10 to-black/5 border border-[#ABFF27]/20 rounded-lg">
+                <div className="flex items-center space-x-2 mb-2">
+                  <div className="w-6 h-6 bg-black rounded flex items-center justify-center">
+                    <img 
+                      src="/kaia.png" 
+                      alt="Kaia logo" 
+                      className="w-4 h-4 rounded"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-xs font-semibold text-black">Recommended for Kaia</p>
+                    <p className="text-xs text-gray-600">Official Klaytn wallet</p>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-black">Recommended for Kaia</p>
-                  <p className="text-xs text-gray-600">Official Klaytn wallet</p>
+                <a
+                  href="https://chrome.google.com/webstore/detail/kaikas/jblndlipeogpafnldhgmapagcccfchpi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center space-x-1 px-2 py-1.5 bg-[#ABFF27] text-black text-xs font-medium rounded hover:bg-[#ABFF27]/80 transition-colors"
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <polyline points="15,3 21,3 21,9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <line x1="10" y1="14" x2="21" y2="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  Install Kaia-Wallet
+                </a>
+              </div>
+              
+              {connectors.map((connector) => (
+                <button
+                  key={connector.uid}
+                  onClick={() => handleConnect(connector)}
+                  className="w-full flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#144489] focus:ring-offset-2"
+                >
+                  <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
+                    {connector.name.toLowerCase().includes('walletconnect') ? (
+                      <img
+                        src="https://images.seeklogo.com/logo-png/43/1/walletconnect-logo-png_seeklogo-430923.png"
+                        alt="WalletConnect logo"
+                        className="w-6 h-6 rounded"
+                      />
+                    ) : connector.icon ? (
+                      <img
+                        src={connector.icon}
+                        alt={`${connector.name} logo`}
+                        className="w-6 h-6 rounded"
+                      />
+                    ) : (
+                      <div className="w-6 h-6 bg-gray-300 rounded flex items-center justify-center">
+                        <span className="text-xs font-bold text-gray-600">
+                          {connector.name.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <span className="text-xs font-medium text-gray-900">
+                    {connector.name}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+                        {/* Right Column - What is a Wallet? */}
+            <div className="w-1/2 p-2">
+              <h5 className="text-xs font-semibold text-gray-900 mb-3">What is a Wallet?</h5>
+              
+              {/* A Home for your Digital Assets */}
+              <div className="mb-3">
+                <div className="flex items-start space-x-2 mb-1">
+                  <div className="w-6 h-6 bg-gradient-to-br from-purple-400 to-pink-400 rounded flex items-center justify-center flex-shrink-0">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" strokeWidth="2" fill="none"/>
+                      <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-gray-900">A Home for your Digital Assets</p>
+                    <p className="text-xs text-gray-600">Wallets are used to send, receive, store, and display digital assets like Ethereum and NFTs.</p>
+                  </div>
                 </div>
               </div>
+
+              {/* A New Way to Log In */}
+              <div className="mb-3">
+                <div className="flex items-start space-x-2 mb-1">
+                  <div className="w-6 h-6 bg-gradient-to-br from-blue-400 to-purple-400 rounded flex items-center justify-center flex-shrink-0">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-gray-900">A New Way to Log In</p>
+                    <p className="text-xs text-gray-600">Instead of creating new accounts and passwords on every website, just connect your wallet.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Get a Wallet Button */}
               <a
-                href="https://chrome.google.com/webstore/detail/kaikas/jblndlipeogpafnldhgmapagcccfchpi"
+                href="https://www.youtube.com/watch?v=SQyg9pyJ1Ac"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center space-x-2 px-3 py-2 bg-[#ABFF27] text-black text-sm font-medium rounded-lg hover:bg-[#ABFF27]/80 transition-colors"
+                className="w-full flex items-center justify-center space-x-1 px-2 py-1.5 bg-[#ABFF27] text-black text-xs font-medium rounded hover:bg-[#ABFF27]/80 transition-colors mb-2"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <polyline points="15,3 21,3 21,9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <line x1="10" y1="14" x2="21" y2="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 5v14l11-7z" fill="currentColor"/>
                 </svg>
-                Install Kaia-Wallet
+                Get a Wallet
+              </a>
+              
+              <a
+                href="https://ethereum.org/en/wallets/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-[#ABFF27] hover:underline text-center block"
+              >
+                Learn More
               </a>
             </div>
-            
-            {connectors.map((connector) => (
-              <button
-                key={connector.uid}
-                onClick={() => handleConnect(connector)}
-                className="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#144489] focus:ring-offset-2"
-              >
-                <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center">
-                  {connector.name.toLowerCase().includes('walletconnect') ? (
-                    <img
-                      src="https://images.seeklogo.com/logo-png/43/1/walletconnect-logo-png_seeklogo-430923.png"
-                      alt="WalletConnect logo"
-                      className="w-8 h-8 rounded-lg"
-                    />
-                  ) : connector.icon ? (
-                    <img
-                      src={connector.icon}
-                      alt={`${connector.name} logo`}
-                      className="w-8 h-8 rounded-lg"
-                    />
-                  ) : (
-                    <div className="w-8 h-8 bg-gray-300 rounded-lg flex items-center justify-center">
-                      <span className="text-xs font-bold text-gray-600">
-                        {connector.name.charAt(0).toUpperCase()}
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <span className="text-sm font-medium text-gray-900">
-                  {connector.name}
-                </span>
-              </button>
-            ))}
           </div>
         </div>
       )}
