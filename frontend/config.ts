@@ -7,7 +7,7 @@ declare module 'wagmi' {
     }
 }
 
-const projectId = process.env.NEXT_PUBLIC_WALLET_CONNECT_ID;
+const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 
 // Define Kaia testnet chain
 const kaiaTestnet = {

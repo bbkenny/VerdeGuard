@@ -126,8 +126,8 @@ export default function MannaLandingPage() {
               </div>
               
               <p className="text-base md:text-lg lg:text-xl mb-8 opacity-95 font-medium leading-relaxed">
-                Instant, transparent, and low-fee fan-to-creator payments powered by KRW Stablecoin. 
-                Eliminate the 15-30% fees that drain creator earnings.
+                              Instant, transparent, and low-fee fan-to-creator support powered by KRW Stablecoin. 
+              Eliminate the 15-30% fees that drain creator earnings.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
@@ -186,7 +186,7 @@ export default function MannaLandingPage() {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {[
-              { icon: Zap, title: "Instant Transfers", desc: "Payments arrive in seconds, not weeks" },
+              { icon: Zap, title: "Instant Support", desc: "Support arrives in seconds, not weeks" },
               { icon: Eye, title: "Transparent", desc: "See exactly where your money goes" },
               { icon: Globe, title: "Global Access", desc: "Support Korean artists, musicians, streamers, and educators from anywhere in the world" }
             ].map(({ icon: Icon, title, desc }) => (
@@ -411,7 +411,7 @@ export default function MannaLandingPage() {
               <h3 className="text-2xl font-bold text-[#144489] mb-6">Traditional Platforms</h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center py-3 border-b border-gray-200">
-                  <span className="text-gray-700">Payment Processing</span>
+                  <span className="text-gray-700">Support Processing</span>
                   <span className="text-red-600 font-bold">5-8%</span>
                 </div>
                 <div className="flex justify-between items-center py-3 border-b border-gray-200">
@@ -437,7 +437,7 @@ export default function MannaLandingPage() {
               <h3 className="text-2xl font-bold mb-6">Manna Platform</h3>
               <div className="space-y-4">
                 <div className="flex justify-between items-center py-3 border-b border-white/20">
-                  <span>Payment Processing</span>
+                  <span>Support Processing</span>
                   <span className="text-[#EFAC20] font-bold">~$0.001</span>
                 </div>
                 <div className="flex justify-between items-center py-3 border-b border-white/20">

@@ -335,7 +335,7 @@ const UserProfile = () => {
             {/* Tab Navigation */}
             <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-8 p-2 sm:p-3 bg-white rounded-2xl shadow-sm">
               <TabButton id="profile" label="Profile" icon={User} isActive={activeTab === 'profile'} onClick={setActiveTab} />
-              <TabButton id="tip" label="Tip Creator" icon={Zap} isActive={activeTab === 'tip'} onClick={setActiveTab} />
+                              <TabButton id="tip" label="Gift Creator" icon={Zap} isActive={activeTab === 'tip'} onClick={setActiveTab} />
               <TabButton id="activity" label="Activity" icon={Activity} isActive={activeTab === 'activity'} onClick={setActiveTab} />
               <TabButton id="creators" label="Creators" icon={Users} isActive={activeTab === 'creators'} onClick={setActiveTab} />
               <TabButton id="settings" label="Settings" icon={Settings} isActive={activeTab === 'settings'} onClick={setActiveTab} />
@@ -391,7 +391,7 @@ const UserProfile = () => {
                 <div className="bg-white rounded-2xl shadow-lg p-6">
                   <h2 className="text-xl font-bold text-[#144489] mb-6 flex items-center">
                     <Zap className="mr-3 text-[#EFAC20]" size={24} />
-                    Send Tip (KRW-S)
+                    Send Gift (KRW-S)
                   </h2>
 
                   {/* Wallet Status */}
@@ -436,7 +436,7 @@ const UserProfile = () => {
                   {/* Amount Input */}
                   <div className="mb-6">
                     <label htmlFor="amount" className="block text-sm font-bold text-[#144489] mb-3">
-                      Tip Amount (KRW-S)
+                      Gift Amount (KRW-S)
                     </label>
                     <input
                       type="number"

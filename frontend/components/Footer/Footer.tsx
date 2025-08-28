@@ -107,14 +107,10 @@ export default function Footer({ scrollToSection }: FooterProps) {
 
         {/* Bottom Section */}
         <div className="border-t border-gray-700 mt-8 pt-8">
-          <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+          <div className="text-center">
             <p className="text-gray-400 text-sm">
               © 2025 Manna (만나). All rights reserved.
             </p>
-            <div className="flex space-x-6 text-sm">
-              <span className="text-gray-400">Chain ID: 1001</span>
-              <span className="text-gray-400">Network: Kaia Baobab</span>
-            </div>
           </div>
         </div>
       </div>
