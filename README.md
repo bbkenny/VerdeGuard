@@ -18,6 +18,14 @@ This repository contains the proof-of-concept (PoC) for **Phase 1** of our visio
 - **Pitch Deck:** [https://docs.google.com/presentation/d/1qKJidCy1NT8JviqDgs9dH36ehSE499nY/edit?usp=sharing&ouid=100528488557506058575&rtpof=true&sd=true] - *Dive deeper into our vision, market, and business model.*
 - **Concept Document:** [https://docs.google.com/document/d/1I5fVrMsMLdSgmz3cI8YoEI8o7y8vWkBMGKT31-908u8/edit?usp=sharing] - *Comprehensive details of the project.*
 
+## Application Screenshots
+
+### Landing Page
+![Manna Landing Page](./frontend/public/landing-snapshot.png)
+
+### User Profile Dashboard
+![Manna User Dashboard](./frontend/public/userdash-snapshot.png)
+
 ## Our Long-Term Roadmap
 
 Manna's journey unfolds in three strategic phases:

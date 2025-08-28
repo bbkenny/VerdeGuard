@@ -394,25 +394,7 @@ const UserProfile = () => {
                     Send Gift (KRW-S)
                   </h2>
 
-                  {/* Wallet Status */}
-                  {!isConnected ? (
-                    <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg text-center">
-                      <Wallet className="mx-auto mb-2 text-[#144489]" size={24} />
-                      <p className="text-[#144489] font-medium">Connect your wallet using the header to start tipping</p>
-                    </div>
-                  ) : (
-                    <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                          <Check className="text-green-600 mr-2" size={20} />
-                          <span className="text-green-700 font-medium">Wallet Connected</span>
-                        </div>
-                        <span className="text-sm text-gray-600">
-                          Balance: ₩{Math.floor(parseFloat(formatBalance(userBalance as bigint))).toLocaleString()} KRW-S
-                        </span>
-                      </div>
-                    </div>
-                  )}
+
 
                   {/* Creator Address Input */}
                   <div className="mb-6">
