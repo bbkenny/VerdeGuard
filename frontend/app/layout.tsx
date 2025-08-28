@@ -6,11 +6,15 @@ import { Providers } from "@/provider";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  fallback: ["system-ui", "Arial", "sans-serif"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  fallback: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -26,7 +30,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
+        style={{
+          fontFamily: `var(--font-geist-sans), system-ui, Arial, sans-serif`,
+        }}
       >
         <Providers>
           {children}

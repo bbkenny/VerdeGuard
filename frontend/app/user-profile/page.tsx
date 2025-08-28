@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { useAccount, useReadContract, useWriteContract, useTransaction, useSwitchChain } from "wagmi";
+import { useAccount, useReadContract, useWriteContract, useSwitchChain } from "wagmi";
 import { parseUnits, formatUnits } from "viem";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
@@ -14,7 +14,6 @@ import {
   X, 
   Copy, 
   Check, 
-  Wallet, 
   TrendingUp, 
   Heart, 
   Gift, 
@@ -31,8 +30,7 @@ import {
   AlertCircle,
   Loader2,
   Zap,
-  Clock,
-  ExternalLink
+  Clock
 } from 'lucide-react';
 
 // Contract Configuration
@@ -130,7 +128,7 @@ const UserProfile = () => {
 
   // Handle successful transaction when writeData changes
   useEffect(() => {
-    if ((writeData as any)?.hash) {
+    if (writeData && typeof writeData === 'object' && 'hash' in writeData) {
       // Transaction was submitted successfully
       setTransactionStatus("Tip sent successfully! 🎉");
       setShowSuccess(true);
@@ -141,7 +139,7 @@ const UserProfile = () => {
         from: formatAddress(address),
         amount: tipAmount,
         timestamp: new Date().toLocaleTimeString(),
-        hash: (writeData as any)?.hash || "Transaction completed"
+        hash: (writeData as { hash: string })?.hash || "Transaction completed"
       };
       setRecentTips(prev => [newTip, ...prev.slice(0, 4)]);
       
@@ -175,15 +173,7 @@ const UserProfile = () => {
     return Math.floor(parseFloat(formatBalance(userBalance as bigint))).toLocaleString();
   };
 
-  const hasSufficientBalance = (amount: string): boolean => {
-    if (!userBalance || !amount) return false;
-    try {
-      const amountInWei = parseUnits(amount, 18);
-      return amountInWei <= (userBalance as bigint);
-    } catch {
-      return false;
-    }
-  };
+
 
   const formatAddress = (addr: string | undefined): string => {
     if (!addr) return "";
