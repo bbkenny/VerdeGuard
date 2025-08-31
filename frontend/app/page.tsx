@@ -4,16 +4,11 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
-import { 
-  ArrowRight, 
-  DollarSign, 
-  Clock, 
-  Eye, 
-  Zap, 
-  Globe, 
-  Users, 
-  TrendingUp
-} from 'lucide-react';
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { ArrowRight, Shield, Zap, Globe, Coins } from "lucide-react"
+import Image from "next/image"
 
 // Intersection Observer Hook
 const useInView = (threshold = 0.1) => {
@@ -56,419 +51,427 @@ const AnimatedSection = ({ children, className = "", delay = 0 }: { children: Re
   );
 };
 
-
-
-export default function MannaLandingPage() {
-
+export default function HomePage() {
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <div className="min-h-screen bg-white overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted">
       <Header />
-      
-             {/* Hero Section */}
-       <section className="pt-24 bg-gradient-to-br from-[#144489] via-[#1a5ba8] to-[#EFAC20] text-white relative overflow-hidden">
-         {/* Animated background elements */}
-         <div className="absolute inset-0 opacity-10">
-           <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-white rounded-full blur-3xl animate-pulse"></div>
-           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#EFAC20] rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
-         </div>
-         
-         {/* Project-related background icons */}
-         <div className="absolute inset-0 opacity-5">
-           {/* Korean Won Symbol */}
-           <div className="absolute top-20 left-20 text-6xl">₩</div>
-           <div className="absolute top-40 right-32 text-4xl">₩</div>
-           <div className="absolute bottom-32 left-32 text-5xl">₩</div>
-           
-           {/* Webtoon/Art Icons */}
-           <div className="absolute top-32 left-1/3 text-5xl">🎨</div>
-           <div className="absolute bottom-20 right-1/4 text-4xl">📱</div>
-           
-           {/* Music Icons */}
-           <div className="absolute top-1/2 right-20 text-4xl">🎵</div>
-           <div className="absolute bottom-1/3 left-1/4 text-5xl">🎤</div>
-           
-           {/* Streaming/Content Icons */}
-           <div className="absolute top-1/3 right-1/3 text-4xl">📺</div>
-           <div className="absolute bottom-1/2 right-1/2 text-5xl">🎬</div>
-           
-           {/* Education Icons */}
-           <div className="absolute top-1/4 right-1/4 text-4xl">📚</div>
-           <div className="absolute bottom-1/4 left-1/2 text-4xl">✏️</div>
-           
-           {/* Blockchain/Technology Icons */}
-           <div className="absolute top-1/2 left-1/2 text-4xl">🔗</div>
-           <div className="absolute bottom-1/3 right-1/3 text-5xl">⚡</div>
-           
-           {/* Global/Connection Icons */}
-           <div className="absolute top-1/3 left-1/4 text-4xl">🌍</div>
-           <div className="absolute bottom-1/2 left-1/3 text-4xl">🤝</div>
-           
-           {/* Korean Culture Icons */}
-           <div className="absolute top-1/2 left-1/4 text-4xl">🇰🇷</div>
-           <div className="absolute bottom-1/4 right-1/2 text-5xl">💝</div>
-         </div>
-        
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-20 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[80vh]">
-            {/* Left Side - Text Content */}
-            <div className="text-left">
-              <div className="mb-8">
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-[#EFAC20] drop-shadow-lg">
-                  Manna <span className="text-[#EFAC20] drop-shadow-2xl">(만나)</span>
-                </h1>
-                <p className="text-lg md:text-xl lg:text-2xl mb-2 opacity-95 font-semibold">
-                  Bridging Global Passion to Korean Creativity
-                </p>
-              </div>
-              
-              <p className="text-base md:text-lg lg:text-xl mb-8 opacity-95 font-medium leading-relaxed">
-                              Instant, transparent, and low-fee fan-to-creator support powered by KRW Stablecoin. 
-              Eliminate the 15-30% fees that drain creator earnings.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link 
-                  href="/user-profile"
-                  className="group bg-[#EFAC20] text-[#144489] px-6 py-3 rounded-xl font-bold text-base hover:bg-[#f4c050] transition-all duration-300 flex items-center justify-center border-2 border-transparent hover:border-[#f4c050]"
-                >
-                  Try Prototype 
-                  <ArrowRight className="ml-2" size={18} />
-                </Link>
-                <button 
-                  onClick={() => scrollToSection('roadmap')}
-                  className="group border-2 border-white text-white px-6 py-3 rounded-xl font-bold text-base hover:bg-white hover:text-[#144489] transition-all duration-300"
-                >
-                  Learn More
-                </button>
-              </div>
-            </div>
-            
-            {/* Right Side - Hero Image */}
-            <div className="flex justify-center lg:justify-end">
-              <div className="relative">
-                <img 
-                  src="/hero-img.png" 
-                  alt="Global fans supporting Korean creators through Manna" 
-                  className="w-full max-w-lg lg:max-w-xl xl:max-w-2xl rounded-2xl shadow-2xl"
-                />
-                {/* Subtle glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#EFAC20]/20 to-transparent rounded-2xl -z-10 blur-xl"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Enhanced Wave decoration */}
-        <div className="relative">
-          <svg viewBox="0 0 1440 120" className="w-full h-20 fill-white animate-pulse">
-            <path d="M0,96L48,80C96,64,192,32,288,42.7C384,53,480,107,576,128C672,149,768,139,864,122.7C960,107,1056,85,1152,90.7C1248,96,1344,128,1392,144L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-          </svg>
-        </div>
-      </section>
 
-      {/* Executive Summary */}
-      <section className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gradient-to-b from-white to-gray-50">
-        <div className="max-w-6xl mx-auto text-center">
-          <AnimatedSection>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#144489] mb-6 leading-tight">
-              Revolutionizing Global K-Culture Support
-            </h2>
-            <p className="text-lg text-gray-700 mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
-              Millions of global fans want to directly support Korean webtoon artists, musicians, streamers, and educators, but existing payment systems 
-              charge exorbitant fees and create weeks-long delays. Manna eliminates these barriers with 
-              blockchain-powered instant transfers.
+      {/* Hero Section */}
+      <section className="relative overflow-hidden py-20 lg:py-32">
+        <div className="absolute inset-0">
+          <Image
+            src="/aerial-view-of-green-agricultural-fields-with-mode.png"
+            alt="Agricultural fields from above"
+            fill
+            className="object-cover opacity-10"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-accent/5"></div>
+        </div>
+        <div className="container mx-auto px-4 relative">
+          <div className="max-w-4xl mx-auto text-center">
+            <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors">
+              🌱 Revolutionizing Crop Insurance
+            </Badge>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-balance mb-6 bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent">
+              Protecting Farmers with
+              <span className="block text-primary">AI & Blockchain</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground text-balance mb-8 max-w-3xl mx-auto leading-relaxed">
+              VerdeGuard provides instant, transparent crop insurance for Latin American farmers using satellite
+              imagery, AI damage assessment, and blockchain technology.
             </p>
-          </AnimatedSection>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {[
-              { icon: Zap, title: "Instant Support", desc: "Support arrives in seconds, not weeks" },
-              { icon: Eye, title: "Transparent", desc: "See exactly where your money goes" },
-              { icon: Globe, title: "Global Access", desc: "Support your Favourite Korean creators,artists, musicians, streamers, and educators from anywhere in the world" }
-            ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="bg-white rounded-2xl p-8 border border-gray-100 shadow-lg">
-                <div className="w-20 h-20 bg-gradient-to-br from-[#EFAC20] to-[#f4c050] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                  <Icon size={36} className="text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-[#144489] mb-3">{title}</h3>
-                <p className="text-gray-600 leading-relaxed font-medium">{desc}</p>
-              </div>
-            ))}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg group"
+              >
+                Start Protecting Your Crops
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-accent text-accent hover:bg-accent hover:text-accent-foreground px-8 py-4 text-lg bg-transparent"
+              >
+                Watch Demo
+              </Button>
+            </div>
           </div>
         </div>
+
+        {/* Floating Elements */}
+        <div className="absolute top-20 left-10 w-20 h-20 bg-primary/10 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-32 h-32 bg-accent/10 rounded-full blur-xl animate-pulse delay-1000"></div>
       </section>
 
       {/* Problem Section */}
-      <section id="problem" className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gradient-to-br from-blue-50 to-[#144489]/5">
-        <div className="max-w-6xl mx-auto">
-          <AnimatedSection className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#144489] mb-4 leading-tight">
-              The Broken System for Global Passion
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-balance mb-6">
+              The Challenge Facing
+              <span className="text-primary block">Latin American Farmers</span>
             </h2>
-            <p className="text-[#EFAC20] text-lg font-bold text-xl">
-              Current payment methods are failing Korean creators,artists, musicians, streamers, and educators
+            <p className="text-lg text-muted-foreground text-balance leading-relaxed">
+              Small-scale farmers lose billions annually to unpredictable weather events, with traditional insurance
+              being inaccessible, unaffordable, and unreliable.
             </p>
-          </AnimatedSection>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {[
-              {
-                icon: DollarSign,
-                title: "Exorbitant Fees",
-                stat: "15-30%",
-                desc: "Traditional payment processors charge massive fees, with Korean creators, artists, musicians, streamers, and educators losing up to 40% of fan support to intermediaries."
-              },
-              {
-                icon: Clock,
-                title: "Slow Settlements",
-                stat: "3-14 days",
-                desc: "International wire transfers take weeks to clear, creating severe cash flow problems for independent Korean creators, artists, musicians, streamers, and educators."
-              },
-              {
-                icon: Eye,
-                title: "Opaque Systems",
-                stat: "Zero visibility",
-                desc: "Fans can't see how much actually reaches Korean creators, artists, musicians, streamers, and educators, undermining trust and the personal connection."
-              }
-            ].map(({ icon: Icon, title, stat, desc }) => (
-              <div key={title} className="bg-white rounded-2xl p-8 shadow-lg border border-red-100">
-                <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-red-100 to-red-200 rounded-2xl flex items-center justify-center mr-4 shadow-md">
-                    <Icon size={28} className="text-red-600" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-[#144489] mb-1">{title}</h3>
-                    <p className="text-red-600 font-bold text-2xl">{stat}</p>
-                  </div>
+          <div className="max-w-3xl mx-auto mb-16">
+            <Image
+              src="/worried-farmer-looking-at-damaged-crops-after-stor.png"
+              alt="Farmer assessing crop damage"
+              width={800}
+              height={400}
+              className="w-full h-64 object-cover rounded-2xl shadow-lg"
+            />
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <Card className="border-destructive/20 bg-card hover:shadow-lg transition-all duration-300 group">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                  <Shield className="h-8 w-8 text-destructive" />
                 </div>
-                <p className="text-gray-700 leading-relaxed font-medium">{desc}</p>
-              </div>
-            ))}
+                <h3 className="text-xl font-semibold mb-4">Inaccessible Insurance</h3>
+                <p className="text-muted-foreground">
+                  Traditional policies require formal credit history and collateral that most small farmers don't have.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-destructive/20 bg-card hover:shadow-lg transition-all duration-300 group">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                  <Coins className="h-8 w-8 text-destructive" />
+                </div>
+                <h3 className="text-xl font-semibold mb-4">Unaffordable Premiums</h3>
+                <p className="text-muted-foreground">
+                  High administrative costs and premiums make traditional insurance prohibitive for small-scale
+                  operations.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-destructive/20 bg-card hover:shadow-lg transition-all duration-300 group">
+              <CardContent className="p-8 text-center">
+                <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                  <Zap className="h-8 w-8 text-destructive" />
+                </div>
+                <h3 className="text-xl font-semibold mb-4">Delayed Payouts</h3>
+                <p className="text-muted-foreground">
+                  Manual claims processing takes months, leaving farmers without funds when they need them most.
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
 
-
-
-
-      {/* Roadmap Section */}
-      <section id="roadmap" className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#144489] mb-4">
-              Strategic Roadmap
+      {/* How It Works Section */}
+      <section id="how-it-works" className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-balance mb-6">
+              How VerdeGuard
+              <span className="text-primary block">Revolutionizes Insurance</span>
             </h2>
-            <p className="text-[#EFAC20] text-base md:text-lg font-semibold">
-              From creator bridge to universal K-culture economy
+            <p className="text-lg text-muted-foreground text-balance leading-relaxed">
+              Our automated platform combines cutting-edge technology to deliver instant, transparent, and accessible
+              crop insurance.
             </p>
           </div>
 
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gray-300"></div>
-            
-            <div className="space-y-12">
-              {[
-                {
-                  phase: "Phase 1",
-                  title: "Direct Creator Bridge",
-                  desc: "Launch core fan-to-creator KRW-S payment platform targeting independent artists, webtoonists, musicians, and streamers.",
-                  status: "current",
-                  features: ["Instant KRW-S transfers", "Web3 wallet integration", "Real-time balance updates", "1% transaction fee"]
-                },
-                {
-                  phase: "Phase 2", 
-                  title: "K-Culture Ecosystem",
-                  desc: "Expand to comprehensive marketplace for digital goods, merchandise, event tickets, and indie gaming integration.",
-                  status: "planned",
-                  features: ["Creator's Market", "NFT & digital goods", "Gaming currency", "Premium creator tools"]
-                },
-                {
-                  phase: "Phase 3",
-                  title: "KRW-S Super App", 
-                  desc: "Universal payment network for Korean tourism, retail, and community-driven creative funding.",
-                  status: "future",
-                  features: ["K-Loyalty program", "Tourism payments", "P2P creative funding", "Retail integration"]
-                }
-              ].map((phase, index) => (
-                <div key={phase.phase} className={`md:flex items-center ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                  <div className={`md:w-5/12 ${index % 2 === 0 ? 'md:pr-8' : 'md:pl-8'}`}>
-                    <div className={`p-6 rounded-xl ${
-                      phase.status === 'current' 
-                        ? 'bg-[#144489] text-white ring-4 ring-[#EFAC20]' 
-                        : 'bg-white shadow-lg'
-                    }`}>
-                      <div className="flex items-center mb-3">
-                        <span className={`px-3 py-1 rounded-full text-sm font-bold ${
-                          phase.status === 'current' ? 'bg-[#EFAC20] text-[#144489]' : 'bg-[#EFAC20] text-white'
-                        }`}>
-                          {phase.phase}
-                        </span>
+          <div className="max-w-4xl mx-auto mb-16">
+            <Image
+              src="/technology-process-flow-diagram-showing-satellite-.png"
+              alt="VerdeGuard process flow"
+              width={900}
+              height={300}
+              className="w-full h-48 object-contain"
+            />
+          </div>
 
-                      </div>
-                      <h3 className={`text-lg font-bold mb-3 ${phase.status === 'current' ? 'text-white' : 'text-[#144489]'}`}>
-                        {phase.title}
-                      </h3>
-                      <p className={`mb-4 ${phase.status === 'current' ? 'text-gray-200' : 'text-gray-600'}`}>
-                        {phase.desc}
-                      </p>
-                      <ul className="space-y-1">
-                        {phase.features.map((feature) => (
-                          <li key={feature} className={`text-sm flex items-center ${phase.status === 'current' ? 'text-gray-200' : 'text-gray-600'}`}>
-                            <div className={`w-1.5 h-1.5 rounded-full mr-2 ${phase.status === 'current' ? 'bg-[#EFAC20]' : 'bg-[#EFAC20]'}`}></div>
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
+          <div className="grid lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5 hover:shadow-xl transition-all duration-300 group">
+              <CardContent className="p-8 text-center">
+                <div className="mb-6">
+                  <Image
+                    src="/satellite-monitoring-crops-from-space--green-agric.png"
+                    alt="Satellite monitoring"
+                    width={120}
+                    height={120}
+                    className="w-20 h-20 mx-auto rounded-lg"
+                  />
+                </div>
+                <h3 className="text-xl font-semibold mb-4">Satellite Monitoring</h3>
+                <p className="text-muted-foreground">
+                  Real-time satellite imagery continuously monitors your crops for signs of damage or stress.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5 hover:shadow-xl transition-all duration-300 group">
+              <CardContent className="p-8 text-center">
+                <div className="mb-6">
+                  <Image
+                    src="/ai-brain-analyzing-crop-data-with-digital-overlays.png"
+                    alt="AI assessment"
+                    width={120}
+                    height={120}
+                    className="w-20 h-20 mx-auto rounded-lg"
+                  />
+                </div>
+                <h3 className="text-xl font-semibold mb-4">AI Assessment</h3>
+                <p className="text-muted-foreground">
+                  Advanced AI analyzes satellite data to accurately detect and quantify crop damage automatically.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5 hover:shadow-xl transition-all duration-300 group">
+              <CardContent className="p-8 text-center">
+                <div className="mb-6">
+                  <Image
+                    src="/blockchain-smart-contract-visualization-with-conne.png"
+                    alt="Smart contracts"
+                    width={120}
+                    height={120}
+                    className="w-20 h-20 mx-auto rounded-lg"
+                  />
+                </div>
+                <h3 className="text-xl font-semibold mb-4">Smart Contracts</h3>
+                <p className="text-muted-foreground">
+                  Blockchain smart contracts automatically trigger payouts when damage is confirmed, ensuring
+                  transparency.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-accent/20 bg-gradient-to-br from-card to-accent/5 hover:shadow-xl transition-all duration-300 group">
+              <CardContent className="p-8 text-center">
+                <div className="mb-6">
+                  <Image
+                    src="/instant-digital-payment-notification-on-mobile-pho.png"
+                    alt="Instant payouts"
+                    width={120}
+                    height={120}
+                    className="w-20 h-20 mx-auto rounded-lg"
+                  />
+                </div>
+                <h3 className="text-xl font-semibold mb-4">Instant Payouts</h3>
+                <p className="text-muted-foreground">
+                  Receive compensation directly to your wallet within minutes, not months, when damage occurs.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-balance mb-6">
+              Why Choose
+              <span className="text-primary block">VerdeGuard?</span>
+            </h2>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
+            <div className="space-y-8">
+              <div className="flex items-start space-x-4 group">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <Globe className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Decentralized & Transparent</h3>
+                  <p className="text-muted-foreground">
+                    All transactions and assessments are recorded on blockchain, ensuring complete transparency and
+                    eliminating intermediaries.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4 group">
+                <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <Zap className="h-6 w-6 text-accent" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Lightning Fast Claims</h3>
+                  <p className="text-muted-foreground">
+                    Automated AI assessment and smart contract execution mean you get paid in minutes, not months.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4 group">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <Shield className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2">Affordable & Accessible</h3>
+                  <p className="text-muted-foreground">
+                    No credit checks, no collateral required. Our low-cost model makes insurance accessible to all
+                    farmers.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative">
+              <Image
+                src="/modern-farmer-using-smartphone-app-in-green-field-.png"
+                alt="Farmer using VerdeGuard app"
+                width={500}
+                height={500}
+                className="w-full h-96 object-cover rounded-2xl shadow-xl"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent rounded-2xl"></div>
+              <div className="absolute bottom-6 left-6 right-6">
+                <div className="bg-background/90 backdrop-blur-sm rounded-lg p-4">
+                  <div className="flex items-center space-x-3">
+                    <Image
+                      src="/verdeguard_logo.png"
+                      alt="VerdeGuard Logo"
+                      width={32}
+                      height={32}
+                      className="w-8 h-8"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-sm">VerdeGuard App</h4>
+                      <p className="text-xs text-muted-foreground">Monitor & Protect Your Crops</p>
                     </div>
                   </div>
-                  
-                  {/* Timeline dot */}
-                  <div className="hidden md:flex w-2/12 justify-center">
-                    <div className={`w-4 h-4 rounded-full ${
-                      phase.status === 'current' ? 'bg-[#EFAC20] ring-4 ring-[#EFAC20]/30' : 'bg-gray-400'
-                    }`}></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Impact Section */}
+      <section id="impact" className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-balance mb-6">
+              Making a Real
+              <span className="text-primary block">Impact</span>
+            </h2>
+            <p className="text-lg text-muted-foreground text-balance leading-relaxed">
+              VerdeGuard is transforming lives and communities across Latin America by providing financial security to
+              those who feed the world.
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto mb-16">
+            <Image
+              src="/infographic-showing-positive-impact-on-latin-ameri.png"
+              alt="VerdeGuard impact visualization"
+              width={800}
+              height={300}
+              className="w-full h-48 object-contain"
+            />
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
+            <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5 text-center hover:shadow-lg transition-all duration-300">
+              <CardContent className="p-8">
+                <div className="text-4xl font-bold text-primary mb-2">10,000+</div>
+                <div className="text-muted-foreground">Farmers Protected</div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-accent/20 bg-gradient-to-br from-card to-accent/5 text-center hover:shadow-lg transition-all duration-300">
+              <CardContent className="p-8">
+                <div className="text-4xl font-bold text-accent mb-2">$2M+</div>
+                <div className="text-muted-foreground">Claims Paid Out</div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5 text-center hover:shadow-lg transition-all duration-300">
+              <CardContent className="p-8">
+                <div className="text-4xl font-bold text-primary mb-2">95%</div>
+                <div className="text-muted-foreground">Accuracy Rate</div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Testimonial */}
+          <Card className="max-w-4xl mx-auto border-accent/20 bg-gradient-to-r from-card via-accent/5 to-card">
+            <CardContent className="p-12">
+              <div className="flex flex-col md:flex-row items-center gap-8">
+                <div className="flex-shrink-0">
+                  <Image
+                    src="/portrait-of-smiling-middle-aged-latin-american-wom.png"
+                    alt="María Rodriguez"
+                    width={120}
+                    height={120}
+                    className="w-24 h-24 rounded-full object-cover"
+                  />
+                </div>
+                <div className="text-center md:text-left">
+                  <blockquote className="text-xl md:text-2xl text-balance mb-6 italic">
+                    "VerdeGuard saved my farm. When the drought hit, I received my payout in just 30 minutes.
+                    Traditional insurance would have taken months, if they paid at all."
+                  </blockquote>
+                  <div className="flex items-center justify-center md:justify-start space-x-4">
+                    <div>
+                      <div className="font-semibold">María Rodriguez</div>
+                      <div className="text-muted-foreground text-sm">Coffee Farmer, Colombia</div>
+                    </div>
                   </div>
-                  
-                  <div className="md:w-5/12"></div>
                 </div>
-              ))}
-            </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-primary via-primary to-accent relative overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/panoramic-view-of-lush-green-agricultural-fields-a.png"
+            alt="Agricultural landscape"
+            fill
+            className="object-cover opacity-20"
+          />
+        </div>
+        <div className="container mx-auto px-4 text-center relative">
+          <h2 className="text-3xl md:text-5xl font-bold text-primary-foreground text-balance mb-6">
+            Ready to Protect Your Crops?
+          </h2>
+          <p className="text-xl text-primary-foreground/90 text-balance mb-8 max-w-2xl mx-auto">
+            Join thousands of farmers who trust VerdeGuard to protect their livelihoods with cutting-edge technology.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Button
+              size="lg"
+              variant="secondary"
+              className="bg-background text-foreground hover:bg-background/90 px-8 py-4 text-lg group"
+            >
+              Get Started Today
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary px-8 py-4 text-lg bg-transparent"
+            >
+              Learn More
+            </Button>
           </div>
         </div>
       </section>
 
-       {/* Market Opportunity */}
-       <section id="market" className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#144489] mb-4">
-              Massive Market Opportunity
-            </h2>
-            <p className="text-[#EFAC20] text-lg font-semibold">
-              At the intersection of creator economy and Korean Wave
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12">
-            {[
-              {
-                icon: Users,
-                title: "Creator Economy",
-                value: "$500B",
-                subtitle: "By 2027",
-                desc: "Global creator economy driven by direct fan engagement and micro-transactions"
-              },
-              {
-                icon: TrendingUp,
-                title: "Korean Wave Growth", 
-                value: "40%+",
-                subtitle: "YoY Growth",
-                desc: "K-content exports seeing explosive international demand and engagement"
-              },
-              {
-                icon: Globe,
-                title: "Cross-Border Payments",
-                value: "Underserved",
-                subtitle: "Niche Market",
-                desc: "High-volume, low-value international creator support lacks efficient infrastructure"
-              }
-            ].map(({ icon: Icon, title, value, subtitle, desc }) => (
-              <div key={title} className="text-center">
-                <div className="w-16 h-16 bg-[#144489] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Icon size={32} className="text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-[#144489] mb-2">{title}</h3>
-                <div className="mb-3">
-                  <p className="text-3xl font-bold text-[#EFAC20]">{value}</p>
-                  <p className="text-sm text-gray-600">{subtitle}</p>
-                </div>
-                <p className="text-gray-600 text-sm">{desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Business Model */}
-      <section className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#144489] mb-4">
-              Fair & Transparent Business Model
-            </h2>
-            <p className="text-[#EFAC20] text-lg font-semibold">
-              Creators keep 99% of fan support
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-            <div className="bg-white rounded-2xl p-8 shadow-lg">
-              <h3 className="text-2xl font-bold text-[#144489] mb-6">Traditional Platforms</h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center py-3 border-b border-gray-200">
-                  <span className="text-gray-700">Support Processing</span>
-                  <span className="text-red-600 font-bold">5-8%</span>
-                </div>
-                <div className="flex justify-between items-center py-3 border-b border-gray-200">
-                  <span className="text-gray-700">Currency Conversion</span>
-                  <span className="text-red-600 font-bold">3-5%</span>
-                </div>
-                <div className="flex justify-between items-center py-3 border-b border-gray-200">
-                  <span className="text-gray-700">Platform Commission</span>
-                  <span className="text-red-600 font-bold">5-10%</span>
-                </div>
-                <div className="flex justify-between items-center py-3 border-b border-gray-200">
-                  <span className="text-gray-700">Hidden Fees</span>
-                  <span className="text-red-600 font-bold">2-7%</span>
-                </div>
-                <div className="flex justify-between items-center py-3 font-bold text-lg">
-                  <span className="text-gray-900">Total Fees</span>
-                  <span className="text-red-600">15-30%</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-br from-[#144489] to-[#1a5ba8] text-white rounded-2xl p-8 shadow-lg">
-              <h3 className="text-2xl font-bold mb-6">Manna Platform</h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center py-3 border-b border-white/20">
-                  <span>Support Processing</span>
-                  <span className="text-[#EFAC20] font-bold">~$0.001</span>
-                </div>
-                <div className="flex justify-between items-center py-3 border-b border-white/20">
-                  <span>Currency Conversion</span>
-                  <span className="text-[#EFAC20] font-bold">Built-in</span>
-                </div>
-                <div className="flex justify-between items-center py-3 border-b border-white/20">
-                  <span>Platform Fee</span>
-                  <span className="text-[#EFAC20] font-bold">1%</span>
-                </div>
-                <div className="flex justify-between items-center py-3 border-b border-white/20">
-                  <span>Hidden Fees</span>
-                  <span className="text-[#EFAC20] font-bold">None</span>
-                </div>
-                <div className="flex justify-between items-center py-3 font-bold text-lg">
-                  <span>Total Fees</span>
-                  <span className="text-[#EFAC20] text-2xl">1%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-
-
-      {/* Footer */}
-      <AnimatedSection>
-        <Footer scrollToSection={scrollToSection} />
-      </AnimatedSection>
+      <Footer scrollToSection={scrollToSection} />
     </div>
-  );
+  )
 }
