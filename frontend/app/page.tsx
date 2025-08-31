@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
@@ -32,21 +32,67 @@ const useInView = (threshold = 0.1) => {
   return [setRef, isInView] as const;
 };
 
-// Animated Section Wrapper
-const AnimatedSection = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
+// Enhanced Animated Section Wrapper with more animations
+const AnimatedSection = ({ children, className = "", delay = 0, animation = "fadeUp" }: { 
+  children: React.ReactNode; 
+  className?: string; 
+  delay?: number;
+  animation?: "fadeUp" | "fadeIn" | "slideIn" | "scaleIn";
+}) => {
   const [setRef, isInView] = useInView(0.1);
+  
+  const getAnimationClasses = () => {
+    const baseClasses = "transition-all duration-1000 ease-out";
+    
+    if (!isInView) {
+      switch (animation) {
+        case "fadeIn":
+          return `${baseClasses} opacity-0`;
+        case "slideIn":
+          return `${baseClasses} opacity-0 transform translate-x-8`;
+        case "scaleIn":
+          return `${baseClasses} opacity-0 transform scale-95`;
+        default: // fadeUp
+          return `${baseClasses} opacity-0 transform translate-y-8`;
+      }
+    }
+    
+    switch (animation) {
+      case "fadeIn":
+        return `${baseClasses} opacity-100`;
+      case "slideIn":
+        return `${baseClasses} opacity-100 transform translate-x-0`;
+      case "scaleIn":
+        return `${baseClasses} opacity-100 transform scale-100`;
+      default: // fadeUp
+        return `${baseClasses} opacity-100 transform translate-y-0`;
+    }
+  };
   
   return (
     <div 
       ref={setRef} 
-      className={`transition-all duration-1000 ease-out ${
-        isInView 
-          ? 'opacity-100 transform translate-y-0' 
-          : 'opacity-0 transform translate-y-8'
-      } ${className}`}
+      className={`${getAnimationClasses()} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
+    </div>
+  );
+};
+
+// Staggered Animation Container
+const StaggeredContainer = ({ children, className = "", staggerDelay = 100 }: {
+  children: React.ReactNode;
+  className?: string;
+  staggerDelay?: number;
+}) => {
+  return (
+    <div className={className}>
+      {React.Children.map(children, (child, index) => (
+        <AnimatedSection delay={index * staggerDelay}>
+          {child}
+        </AnimatedSection>
+      ))}
     </div>
   );
 };
@@ -59,8 +105,8 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted">
       <Header />
-
-      {/* Hero Section */}
+      
+             {/* Hero Section */}
       <section className="relative overflow-hidden py-20 lg:py-32">
         <div className="absolute inset-0">
           <Image
@@ -70,7 +116,7 @@ export default function HomePage() {
             className="object-cover opacity-10"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-accent/5"></div>
-        </div>
+         </div>
         <div className="container mx-auto px-4 relative">
           <div className="max-w-4xl mx-auto text-center">
             <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 hover:bg-primary/20 transition-colors">
@@ -79,7 +125,7 @@ export default function HomePage() {
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-balance mb-6 bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent">
               Protecting Farmers with
               <span className="block text-primary">AI & Blockchain</span>
-            </h1>
+                </h1>
             <p className="text-xl md:text-2xl text-muted-foreground text-balance mb-8 max-w-3xl mx-auto leading-relaxed">
               VerdeGuard provides instant, transparent crop insurance for Latin American farmers using satellite
               imagery, AI damage assessment, and blockchain technology.
@@ -102,7 +148,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-
+        
         {/* Floating Elements */}
         <div className="absolute top-20 left-10 w-20 h-20 bg-primary/10 rounded-full blur-xl animate-pulse"></div>
         <div className="absolute bottom-20 right-10 w-32 h-32 bg-accent/10 rounded-full blur-xl animate-pulse delay-1000"></div>
@@ -120,7 +166,7 @@ export default function HomePage() {
               Small-scale farmers lose billions annually to unpredictable weather events, with traditional insurance
               being inaccessible, unaffordable, and unreliable.
             </p>
-          </div>
+                  </div>
 
           <div className="max-w-3xl mx-auto mb-16">
             <Image
@@ -130,10 +176,10 @@ export default function HomePage() {
               height={400}
               className="w-full h-64 object-cover rounded-2xl shadow-lg"
             />
-          </div>
+                  </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <Card className="border-destructive/20 bg-card hover:shadow-lg transition-all duration-300 group">
+          <StaggeredContainer className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto" staggerDelay={150}>
+            <Card className="border-destructive/20 bg-card hover:shadow-lg transition-all duration-300 group hover:scale-105">
               <CardContent className="p-8 text-center">
                 <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                   <Shield className="h-8 w-8 text-destructive" />
@@ -145,11 +191,11 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="border-destructive/20 bg-card hover:shadow-lg transition-all duration-300 group">
+            <Card className="border-destructive/20 bg-card hover:shadow-lg transition-all duration-300 group hover:scale-105">
               <CardContent className="p-8 text-center">
                 <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                   <Coins className="h-8 w-8 text-destructive" />
-                </div>
+              </div>
                 <h3 className="text-xl font-semibold mb-4">Unaffordable Premiums</h3>
                 <p className="text-muted-foreground">
                   High administrative costs and premiums make traditional insurance prohibitive for small-scale
@@ -158,18 +204,18 @@ export default function HomePage() {
               </CardContent>
             </Card>
 
-            <Card className="border-destructive/20 bg-card hover:shadow-lg transition-all duration-300 group">
+            <Card className="border-destructive/20 bg-card hover:shadow-lg transition-all duration-300 group hover:scale-105">
               <CardContent className="p-8 text-center">
                 <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
                   <Zap className="h-8 w-8 text-destructive" />
-                </div>
+          </div>
                 <h3 className="text-xl font-semibold mb-4">Delayed Payouts</h3>
                 <p className="text-muted-foreground">
                   Manual claims processing takes months, leaving farmers without funds when they need them most.
                 </p>
               </CardContent>
             </Card>
-          </div>
+          </StaggeredContainer>
         </div>
       </section>
 
@@ -195,9 +241,9 @@ export default function HomePage() {
               height={300}
               className="w-full h-48 object-contain"
             />
-          </div>
-
-          <div className="grid lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+                  </div>
+                  
+          <StaggeredContainer className="grid lg:grid-cols-4 gap-8 max-w-7xl mx-auto" staggerDelay={200}>
             <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5 hover:shadow-xl transition-all duration-300 group">
               <CardContent className="p-8 text-center">
                 <div className="mb-6">
@@ -208,7 +254,7 @@ export default function HomePage() {
                     height={120}
                     className="w-20 h-20 mx-auto rounded-lg"
                   />
-                </div>
+                  </div>
                 <h3 className="text-xl font-semibold mb-4">Satellite Monitoring</h3>
                 <p className="text-muted-foreground">
                   Real-time satellite imagery continuously monitors your crops for signs of damage or stress.
@@ -244,7 +290,7 @@ export default function HomePage() {
                     height={120}
                     className="w-20 h-20 mx-auto rounded-lg"
                   />
-                </div>
+            </div>
                 <h3 className="text-xl font-semibold mb-4">Smart Contracts</h3>
                 <p className="text-muted-foreground">
                   Blockchain smart contracts automatically trigger payouts when damage is confirmed, ensuring
@@ -263,14 +309,14 @@ export default function HomePage() {
                     height={120}
                     className="w-20 h-20 mx-auto rounded-lg"
                   />
-                </div>
+          </div>
                 <h3 className="text-xl font-semibold mb-4">Instant Payouts</h3>
                 <p className="text-muted-foreground">
                   Receive compensation directly to your wallet within minutes, not months, when damage occurs.
                 </p>
               </CardContent>
             </Card>
-          </div>
+          </StaggeredContainer>
         </div>
       </section>
 
@@ -309,7 +355,7 @@ export default function HomePage() {
                     Automated AI assessment and smart contract execution mean you get paid in minutes, not months.
                   </p>
                 </div>
-              </div>
+                </div>
 
               <div className="flex items-start space-x-4 group">
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
@@ -347,8 +393,8 @@ export default function HomePage() {
                     <div>
                       <h4 className="font-semibold text-sm">VerdeGuard App</h4>
                       <p className="text-xs text-muted-foreground">Monitor & Protect Your Crops</p>
-                    </div>
-                  </div>
+                </div>
+                </div>
                 </div>
               </div>
             </div>
@@ -471,7 +517,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <Footer scrollToSection={scrollToSection} />
+        <Footer scrollToSection={scrollToSection} />
     </div>
   )
 }

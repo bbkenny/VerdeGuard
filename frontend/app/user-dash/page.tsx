@@ -5,7 +5,7 @@ import { useAccount, useReadContract, useWriteContract, useSwitchChain } from "w
 import { parseUnits, formatUnits } from "viem";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import MANNA_ABI from "../../constants/ABIs/manna.json";
+
 import { 
   User, 
   Edit3, 
@@ -33,12 +33,12 @@ import {
   Clock
 } from 'lucide-react';
 
-// Contract Configuration
-const MANNA_CONTRACT_ADDRESS = "0x89A2C29B55Fb31E5739682f5b9aE3a004E7a1a54" as `0x${string}`;
-const CREATOR_ADDRESS = "0xA421d9AE4945C63D4353F74a689a55813F993603" as `0x${string}`;
-const KAIA_BAOBAB_CHAIN_ID = 1001; // Kaia Testnet
+// Contract Configuration - Placeholder for future VerdeGuard contracts
+const VERDEGUARD_CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000000" as `0x${string}`;
+const POLICY_PROVIDER_ADDRESS = "0x0000000000000000000000000000000000000000" as `0x${string}`;
+const CHAIN_ID = 1001; // Placeholder chain ID
 
-interface TipTransaction {
+interface InsuranceTransaction {
   from: string;
   amount: string;
   timestamp: string;
@@ -52,67 +52,67 @@ const UserProfile = () => {
   const [isAddressCopied, setIsAddressCopied] = useState(false);
   const [activeTab, setActiveTab] = useState('profile');
   const [animationClass, setAnimationClass] = useState('');
-  const [tipAmount, setTipAmount] = useState("");
-  const [creatorAddress, setCreatorAddress] = useState<string>(CREATOR_ADDRESS);
+  const [insuranceAmount, setInsuranceAmount] = useState("");
+  const [policyAddress, setPolicyAddress] = useState<string>(POLICY_PROVIDER_ADDRESS);
   const [transactionStatus, setTransactionStatus] = useState("");
 
   const [showSuccess, setShowSuccess] = useState(false);
-  const [recentTips, setRecentTips] = useState<TipTransaction[]>([]);
+  const [recentTransactions, setRecentTransactions] = useState<InsuranceTransaction[]>([]);
   const [balanceAnimation, setBalanceAnimation] = useState(false);
   
-  // Mock user data
+  // Mock user data - Farmer Profile
   const [userData, setUserData] = useState({
-    name: 'Sarah Chen',
-    username: '@sarah_seoul',
-    email: 'sarah.chen@example.com',
-    bio: 'K-culture enthusiast supporting amazing Korean creators. Love webtoons, K-pop, and indie artists! 🇰🇷✨',
-    location: 'Seoul, South Korea',
-    joinDate: 'March 2024',
-    avatar: '👩‍💼'
+    name: 'María Rodriguez',
+    username: '@maria_coffee_farm',
+    email: 'maria.rodriguez@example.com',
+    bio: 'Coffee farmer from Colombia protecting my crops with VerdeGuard. Growing sustainable coffee for 15 years! ☕🌱',
+    location: 'Medellín, Colombia',
+    joinDate: 'January 2024',
+    avatar: '👩‍🌾'
   });
 
   const mockStats = {
-    totalGifted: 125000,
-    creatorsSupported: 18,
-    giftsSent: 47,
-    favoriteCreators: 12
+    policiesActive: 3,
+    totalCoverage: 250000,
+    claimsFiled: 2,
+    totalPayouts: 45000
   };
 
   const mockTransactions = [
-    { id: 1, creator: 'Artist Kim', amount: 5000, date: '2024-08-25', type: 'gift' },
-    { id: 2, creator: 'Webtoon Studio', amount: 10000, date: '2024-08-24', type: 'gift' },
-    { id: 3, creator: 'Musician Lee', amount: 3000, date: '2024-08-23', type: 'gift' },
-    { id: 4, creator: 'Streamer Park', amount: 8000, date: '2024-08-22', type: 'gift' }
+    { id: 1, policy: 'Coffee Crop Insurance', amount: 25000, date: '2024-08-25', type: 'claim' },
+    { id: 2, policy: 'Corn Field Coverage', amount: 15000, date: '2024-08-24', type: 'payout' },
+    { id: 3, policy: 'Bean Farm Protection', amount: 5000, date: '2024-08-23', type: 'premium' },
+    { id: 4, policy: 'Rice Field Insurance', amount: 8000, date: '2024-08-22', type: 'claim' }
   ];
 
-  const mockCreators = [
-    { name: 'Artist Kim', category: 'Illustration', avatar: '🎨', gifted: 15000 },
-    { name: 'Musician Lee', category: 'Music', avatar: '🎵', gifted: 12000 },
-    { name: 'Webtoon Studio', category: 'Comics', avatar: '📚', gifted: 25000 },
-    { name: 'Streamer Park', category: 'Gaming', avatar: '🎮', gifted: 8000 }
+  const mockPolicies = [
+    { name: 'Coffee Crop Insurance', category: 'Coffee', avatar: '☕', coverage: 100000, status: 'Active' },
+    { name: 'Corn Field Coverage', category: 'Corn', avatar: '🌽', coverage: 75000, status: 'Active' },
+    { name: 'Bean Farm Protection', category: 'Beans', avatar: '🫘', coverage: 50000, status: 'Active' },
+    { name: 'Rice Field Insurance', category: 'Rice', avatar: '🌾', coverage: 25000, status: 'Pending' }
   ];
 
   const userAddress = "0x742d35Cc6Bb1332046c003e036Cd2Da7d2E2aD7C";
 
-  // Read creator's KRW-S balance
-  const { data: creatorBalance, refetch: refetchCreatorBalance } = useReadContract({
-    address: MANNA_CONTRACT_ADDRESS,
-    abi: MANNA_ABI,
+  // Read policy provider's balance - Placeholder for future implementation
+  const { data: policyBalance, refetch: refetchPolicyBalance } = useReadContract({
+    address: VERDEGUARD_CONTRACT_ADDRESS,
+    abi: [] as any, // Placeholder ABI
     functionName: 'balanceOf',
-    args: [creatorAddress as `0x${string}`],
+    args: [policyAddress as `0x${string}`],
     query: {
-      enabled: !!creatorAddress && creatorAddress.length === 42,
+      enabled: false, // Disabled until contract is deployed
     },
   });
 
-  // Read user's KRW-S balance
+  // Read user's balance - Placeholder for future implementation
   const { data: userBalance } = useReadContract({
-    address: MANNA_CONTRACT_ADDRESS,
-    abi: MANNA_ABI,
+    address: VERDEGUARD_CONTRACT_ADDRESS,
+    abi: [] as any, // Placeholder ABI
     functionName: 'balanceOf',
     args: [address as `0x${string}`],
     query: {
-      enabled: !!address,
+      enabled: false, // Disabled until contract is deployed
     },
   });
 
@@ -130,21 +130,21 @@ const UserProfile = () => {
   useEffect(() => {
     if (writeData && typeof writeData === 'object' && 'hash' in writeData) {
       // Transaction was submitted successfully
-      setTransactionStatus("Tip sent successfully! 🎉");
+      setTransactionStatus("Insurance policy purchased successfully! 🎉");
       setShowSuccess(true);
       setBalanceAnimation(true);
       
-      // Add to recent tips
-      const newTip: TipTransaction = {
+      // Add to recent transactions
+      const newTransaction: InsuranceTransaction = {
         from: formatAddress(address),
-        amount: tipAmount,
+        amount: insuranceAmount,
         timestamp: new Date().toLocaleTimeString(),
         hash: (writeData as { hash: string })?.hash || "Transaction completed"
       };
-      setRecentTips(prev => [newTip, ...prev.slice(0, 4)]);
+      setRecentTransactions(prev => [newTransaction, ...prev.slice(0, 4)]);
       
-      setTipAmount("");
-      refetchCreatorBalance();
+      setInsuranceAmount("");
+      // refetchPolicyBalance(); // Disabled until contract is deployed
       
       setTimeout(() => {
         setTransactionStatus("");
@@ -152,7 +152,7 @@ const UserProfile = () => {
         setBalanceAnimation(false);
       }, 5000);
     }
-  }, [writeData, tipAmount, address, refetchCreatorBalance]);
+  }, [writeData, insuranceAmount, address]);
 
 
 
@@ -180,8 +180,8 @@ const UserProfile = () => {
     return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
   };
 
-  const copyCreatorAddress = async () => {
-    await navigator.clipboard.writeText(creatorAddress);
+  const copyPolicyAddress = async () => {
+    await navigator.clipboard.writeText(policyAddress);
     setIsAddressCopied(true);
     setTimeout(() => setIsAddressCopied(false), 2000);
   };
@@ -192,27 +192,27 @@ const UserProfile = () => {
     setTimeout(() => setIsAddressCopied(false), 2000);
   };
 
-  const handleQuickTip = (amount: string | number) => {
-    setTipAmount(amount.toString());
+  const handleQuickInsurance = (amount: string | number) => {
+    setInsuranceAmount(amount.toString());
   };
 
   const handleSwitchNetwork = async () => {
     try {
-      await switchChain({ chainId: KAIA_BAOBAB_CHAIN_ID });
+      await switchChain({ chainId: CHAIN_ID });
     } catch (error: unknown) {
       console.error("Failed to switch network:", error);
-      setTransactionStatus("Failed to switch network. Please switch to Kaia Baobab manually.");
+      setTransactionStatus("Failed to switch network. Please switch to the correct network manually.");
     }
   };
 
-  const handleTip = async () => {
-    if (!tipAmount || !creatorAddress) {
-      setTransactionStatus("Please enter a valid amount and creator address.");
+  const handleBuyInsurance = async () => {
+    if (!insuranceAmount || !policyAddress) {
+      setTransactionStatus("Please enter a valid amount and policy address.");
       return;
     }
 
-    if (creatorAddress.length !== 42 || !creatorAddress.startsWith('0x')) {
-      setTransactionStatus("Please enter a valid creator wallet address.");
+    if (policyAddress.length !== 42 || !policyAddress.startsWith('0x')) {
+      setTransactionStatus("Please enter a valid policy wallet address.");
       return;
     }
 
@@ -222,7 +222,7 @@ const UserProfile = () => {
     }
 
     if (isWrongNetwork) {
-      setTransactionStatus("Please switch to Kaia Baobab testnet.");
+      setTransactionStatus("Please switch to the correct network.");
       return;
     }
 
@@ -232,26 +232,29 @@ const UserProfile = () => {
     }
 
     try {
-      const amountInWei = parseUnits(tipAmount, 18);
+      const amountInWei = parseUnits(insuranceAmount, 18);
       
       // Check if user has sufficient balance
       if (userBalance && amountInWei > (userBalance as bigint)) {
-        setTransactionStatus("Insufficient balance. Please check your KRW-S balance.");
+        setTransactionStatus("Insufficient balance. Please check your balance.");
         return;
       }
 
-      // This will trigger the wallet popup
-      writeContract({
-        address: MANNA_CONTRACT_ADDRESS,
-        abi: MANNA_ABI,
-        functionName: 'transfer',
-        args: [creatorAddress as `0x${string}`, amountInWei],
-      });
+      // This will trigger the wallet popup - Placeholder for future implementation
+      // writeContract({
+      //   address: VERDEGUARD_CONTRACT_ADDRESS,
+      //   abi: [] as any,
+      //   functionName: 'transfer',
+      //   args: [policyAddress as `0x${string}`, amountInWei],
+      // });
       
-      setTransactionStatus("Transaction submitted! Please confirm in your wallet.");
+      // For now, just show success message
+      setTransactionStatus("Insurance purchase submitted! Please confirm in your wallet.");
+      
+      setTransactionStatus("Insurance purchase submitted! Please confirm in your wallet.");
       
     } catch (error: unknown) {
-      console.error("Error sending tip:", error);
+      console.error("Error buying insurance:", error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
       setTransactionStatus(`Transaction failed: ${errorMessage}`);
     }
@@ -259,8 +262,8 @@ const UserProfile = () => {
 
 
 
-  const isWrongNetwork = isConnected && chain?.id !== KAIA_BAOBAB_CHAIN_ID;
-  const canSendTip = tipAmount && creatorAddress && creatorAddress.length === 42 && !isTransferPending;
+  const isWrongNetwork = isConnected && chain?.id !== CHAIN_ID;
+  const canBuyInsurance = insuranceAmount && policyAddress && policyAddress.length === 42 && !isTransferPending;
 
   const TabButton = ({ id, label, icon: Icon, isActive, onClick }: { id: string; label: string; icon: React.ComponentType<{ size?: number; className?: string }>; isActive: boolean; onClick: (id: string) => void }) => (
     <button
@@ -286,7 +289,7 @@ const UserProfile = () => {
           <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-lg flex items-center justify-between">
             <div className="flex items-center">
               <AlertCircle className="text-amber-600 mr-3" size={20} />
-              <span className="text-amber-800 font-medium">Please switch to Kaia Baobab testnet</span>
+              <span className="text-amber-800 font-medium">Please switch to the correct network</span>
             </div>
             <button 
               onClick={handleSwitchNetwork}
@@ -355,51 +358,51 @@ const UserProfile = () => {
             {/* Tab Navigation */}
             <div className="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-8 p-2 sm:p-3 bg-white rounded-2xl shadow-sm">
               <TabButton id="profile" label="Profile" icon={User} isActive={activeTab === 'profile'} onClick={setActiveTab} />
-                              <TabButton id="tip" label="Gift Creator" icon={Zap} isActive={activeTab === 'tip'} onClick={setActiveTab} />
+              <TabButton id="insurance" label="Buy Insurance" icon={Shield} isActive={activeTab === 'insurance'} onClick={setActiveTab} />
               <TabButton id="activity" label="Activity" icon={Activity} isActive={activeTab === 'activity'} onClick={setActiveTab} />
-              <TabButton id="creators" label="Creators" icon={Users} isActive={activeTab === 'creators'} onClick={setActiveTab} />
+              <TabButton id="policies" label="My Policies" icon={Users} isActive={activeTab === 'policies'} onClick={setActiveTab} />
               <TabButton id="settings" label="Settings" icon={Settings} isActive={activeTab === 'settings'} onClick={setActiveTab} />
             </div>
 
-            {/* Tip Creator Tab */}
-            {activeTab === 'tip' && (
+            {/* Buy Insurance Tab */}
+            {activeTab === 'insurance' && (
               <div className="space-y-6 animate-fadeIn">
-                {/* Creator Info Panel */}
+                {/* Insurance Provider Info Panel */}
                 <div className="bg-white rounded-2xl shadow-lg p-6">
                   <div className="text-center mb-6">
-                    <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#EFAC20] to-[#f4c050] flex items-center justify-center">
-                      <span className="text-4xl">🎨</span>
+                    <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center">
+                      <span className="text-4xl">🌱</span>
                     </div>
-                    <h2 className="text-xl font-bold text-[#144489] mb-1">Artist Kim (김작가)</h2>
-                    <p className="text-gray-600 mb-2 text-sm">@artist_kim_seoul</p>
+                    <h2 className="text-xl font-bold text-gray-800 mb-1">VerdeGuard Insurance</h2>
+                    <p className="text-gray-600 mb-2 text-sm">@verdeguard_insurance</p>
                     <p className="text-xs text-gray-500 leading-relaxed">
-                      Independent illustrator bringing Seoul stories to life. Creating webtoons that bridge cultures. 감사합니다! ✨
+                      Protecting farmers with AI-powered crop insurance. Instant payouts, transparent coverage, and reliable protection for your livelihood.
                     </p>
                   </div>
 
-                  {/* Creator Balance Display */}
-                  <div className={`bg-gradient-to-r from-[#144489] to-[#1a5ba8] text-white p-6 rounded-xl text-center mb-6 transition-all duration-1000 ${balanceAnimation ? 'scale-105 ring-4 ring-[#EFAC20]/30' : ''}`}>
-                    <p className="text-sm opacity-90 mb-1">Creator Balance</p>
+                  {/* Policy Provider Balance Display */}
+                  <div className={`bg-gradient-to-r from-emerald-500 to-green-600 text-white p-6 rounded-xl text-center mb-6 transition-all duration-1000 ${balanceAnimation ? 'scale-105 ring-4 ring-emerald-300/30' : ''}`}>
+                    <p className="text-sm opacity-90 mb-1">Policy Provider Balance</p>
                     <p className="text-2xl font-bold mb-1">
-                      ₩{Math.floor(parseFloat(formatBalance(creatorBalance as bigint))).toLocaleString()} KRW-S
+                      ₩{Math.floor(parseFloat(formatBalance(policyBalance as bigint))).toLocaleString()}
                     </p>
-                    <p className="text-xs opacity-75">Updates in real-time from Kaia Baobab</p>
+                    <p className="text-xs opacity-75">Updates in real-time from blockchain</p>
                     {balanceAnimation && (
-                      <p className="text-[#EFAC20] text-sm mt-2 font-medium">✨ Just received your tip!</p>
+                      <p className="text-emerald-300 text-sm mt-2 font-medium">✨ Insurance purchased successfully!</p>
                     )}
                   </div>
 
-                  {/* Creator Address */}
+                  {/* Policy Address */}
                   <div className="mb-6">
-                    <p className="text-sm text-gray-600 mb-2">Creator Wallet</p>
+                    <p className="text-sm text-gray-600 mb-2">Policy Provider Wallet</p>
                     <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                       <span className="text-sm font-mono text-gray-700">
-                        {creatorAddress ? formatAddress(creatorAddress) : "Enter address above"}
+                        {policyAddress ? formatAddress(policyAddress) : "Enter address above"}
                       </span>
                       <button 
-                        onClick={copyCreatorAddress}
+                        onClick={copyPolicyAddress}
                         className="p-1 hover:bg-gray-200 rounded transition-colors"
-                        disabled={!creatorAddress}
+                        disabled={!policyAddress}
                       >
                         {isAddressCopied ? <Check size={16} className="text-green-600" /> : <Copy size={16} className="text-gray-500" />}
                       </button>
@@ -407,11 +410,11 @@ const UserProfile = () => {
                   </div>
                 </div>
 
-                {/* Tip Panel */}
+                {/* Insurance Panel */}
                 <div className="bg-white rounded-2xl shadow-lg p-6">
-                  <h2 className="text-xl font-bold text-[#144489] mb-6 flex items-center">
-                    <Zap className="mr-3 text-[#EFAC20]" size={24} />
-                    Send Gift (KRW-S)
+                  <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                    <Shield className="mr-3 text-emerald-600" size={24} />
+                    Buy Crop Insurance
                   </h2>
 
                   {/* User Balance Display */}
@@ -431,51 +434,51 @@ const UserProfile = () => {
 
 
 
-                  {/* Creator Address Input */}
+                  {/* Policy Address Input */}
                   <div className="mb-6">
-                    <label htmlFor="creatorAddress" className="block text-sm font-bold text-[#144489] mb-3">
-                      Creator Wallet Address
+                    <label htmlFor="policyAddress" className="block text-sm font-bold text-gray-800 mb-3">
+                      Policy Provider Address
                     </label>
                     <input
                       type="text"
-                      id="creatorAddress"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#144489] focus:border-[#144489] transition-colors text-lg font-semibold text-gray-900 placeholder-gray-600"
-                      placeholder="Enter creator's wallet address (0x...)"
-                      value={creatorAddress}
-                      onChange={(e) => setCreatorAddress(e.target.value as string)}
+                      id="policyAddress"
+                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors text-lg font-semibold text-gray-900 placeholder-gray-600"
+                      placeholder="Enter policy provider's wallet address (0x...)"
+                      value={policyAddress}
+                      onChange={(e) => setPolicyAddress(e.target.value as string)}
                       disabled={false}
                     />
                     <p className="text-sm text-gray-500 mt-1">
-                      Enter the wallet address of the creator you want to tip
+                      Enter the wallet address of the insurance provider
                     </p>
                   </div>
 
                   {/* Amount Input */}
                   <div className="mb-6">
-                    <label htmlFor="amount" className="block text-sm font-bold text-[#144489] mb-3">
-                      Gift Amount (KRW-S)
+                    <label htmlFor="amount" className="block text-sm font-bold text-gray-800 mb-3">
+                      Insurance Premium Amount
                     </label>
                     <input
                       type="number"
                       id="amount"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#144489] focus:border-[#144489] transition-colors text-lg font-semibold text-gray-900 placeholder-gray-600"
-                      placeholder="Enter amount (e.g., 1000)"
-                      value={tipAmount}
-                      onChange={(e) => setTipAmount(e.target.value)}
+                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors text-lg font-semibold text-gray-900 placeholder-gray-600"
+                      placeholder="Enter premium amount (e.g., 1000)"
+                      value={insuranceAmount}
+                      onChange={(e) => setInsuranceAmount(e.target.value)}
                       disabled={false}
                     />
                   </div>
 
-                  {/* Quick Tip Buttons */}
+                  {/* Quick Insurance Buttons */}
                   <div className="mb-6">
-                    <p className="text-sm font-bold text-[#144489] mb-4">Quick Tips:</p>
+                    <p className="text-sm font-bold text-gray-800 mb-4">Quick Premiums:</p>
                     <div className="grid grid-cols-3 gap-3">
                       {[1000, 5000, 10000].map((amount) => (
                         <button
                           key={amount}
-                          onClick={() => handleQuickTip(amount)}
+                          onClick={() => handleQuickInsurance(amount)}
                           disabled={false}
-                          className="px-4 py-3 border-2 border-[#EFAC20] text-[#EFAC20] rounded-lg hover:bg-[#EFAC20] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-bold text-base"
+                          className="px-4 py-3 border-2 border-emerald-500 text-emerald-600 rounded-lg hover:bg-emerald-500 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-bold text-base"
                         >
                           ₩{amount.toLocaleString()}
                         </button>
@@ -483,11 +486,11 @@ const UserProfile = () => {
                     </div>
                   </div>
 
-                  {/* Send Tip Button */}
+                  {/* Buy Insurance Button */}
                   <button
-                    onClick={handleTip}
-                    disabled={!canSendTip}
-                    className="w-full bg-[#144489] text-white font-bold py-4 px-6 rounded-lg hover:bg-[#1a5ba8] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-lg"
+                    onClick={handleBuyInsurance}
+                    disabled={!canBuyInsurance}
+                    className="w-full bg-emerald-600 text-white font-bold py-4 px-6 rounded-lg hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-lg"
                   >
                     {isTransferPending ? (
                       <>
@@ -496,8 +499,8 @@ const UserProfile = () => {
                       </>
                     ) : (
                       <>
-                        <Zap className="mr-2" size={20} />
-                        Send Tip
+                        <Shield className="mr-2" size={20} />
+                        Buy Insurance
                       </>
                     )}
                   </button>
@@ -517,27 +520,27 @@ const UserProfile = () => {
                 </div>
 
                 {/* Recent Activity */}
-                {recentTips.length > 0 && (
+                {recentTransactions.length > 0 && (
                   <div className="bg-white rounded-2xl shadow-lg p-6">
-                                          <h3 className="text-xl font-bold text-[#144489] mb-4 flex items-center">
-                        <TrendingUp className="mr-2 text-[#EFAC20]" size={24} />
-                        Recent Gifts
-                      </h3>
+                    <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                      <TrendingUp className="mr-2 text-emerald-600" size={24} />
+                      Recent Transactions
+                    </h3>
                     <div className="space-y-3">
-                                              {recentTips.map((tip) => (
-                          <div key={`tip-${tip.timestamp}`} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                      {recentTransactions.map((transaction) => (
+                        <div key={`transaction-${transaction.timestamp}`} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                           <div className="flex items-center">
-                            <div className="w-8 h-8 bg-[#EFAC20] rounded-full flex items-center justify-center mr-3">
-                              <span className="text-white text-sm">🎉</span>
+                            <div className="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center mr-3">
+                              <span className="text-white text-sm">🛡️</span>
                             </div>
                             <div>
-                              <p className="font-medium text-gray-900">{tip.from}</p>
-                              <p className="text-sm text-gray-500">{tip.timestamp}</p>
+                              <p className="font-medium text-gray-900">{transaction.from}</p>
+                              <p className="text-sm text-gray-500">{transaction.timestamp}</p>
                             </div>
                           </div>
                           <div className="text-right">
-                            <p className="font-bold text-[#144489]">₩{parseInt(tip.amount).toLocaleString()}</p>
-                            <p className="text-xs text-gray-500">KRW-S</p>
+                            <p className="font-bold text-emerald-600">₩{parseInt(transaction.amount).toLocaleString()}</p>
+                            <p className="text-xs text-gray-500">Insurance</p>
                           </div>
                         </div>
                       ))}
@@ -677,25 +680,25 @@ const UserProfile = () => {
                     Activity Overview
                   </h3>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="text-center p-4 bg-gradient-to-r from-emerald-50 to-emerald-100 rounded-xl hover:shadow-md transition-all">
+                      <Shield className="mx-auto mb-2 text-emerald-600" size={24} />
+                      <p className="text-2xl font-bold text-emerald-600">{mockStats.policiesActive}</p>
+                      <p className="text-sm text-gray-600">Active Policies</p>
+                    </div>
                     <div className="text-center p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl hover:shadow-md transition-all">
-                      <Gift className="mx-auto mb-2 text-[#144489]" size={24} />
-                      <p className="text-2xl font-bold text-[#144489]">{mockStats.giftsSent}</p>
-                      <p className="text-sm text-gray-600">Gifts Sent</p>
+                      <CreditCard className="mx-auto mb-2 text-blue-600" size={24} />
+                      <p className="text-2xl font-bold text-blue-600">₩{(mockStats.totalCoverage / 1000)}K</p>
+                      <p className="text-sm text-gray-600">Total Coverage</p>
                     </div>
-                    <div className="text-center p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-xl hover:shadow-md transition-all">
-                      <Heart className="mx-auto mb-2 text-[#EFAC20]" size={24} />
-                      <p className="text-2xl font-bold text-[#EFAC20]">₩{(mockStats.totalGifted / 1000)}K</p>
-                      <p className="text-sm text-gray-600">Total Gifted</p>
-                    </div>
-                    <div className="text-center p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-xl hover:shadow-md transition-all">
-                      <Users className="mx-auto mb-2 text-green-600" size={24} />
-                      <p className="text-2xl font-bold text-green-600">{mockStats.creatorsSupported}</p>
-                      <p className="text-sm text-gray-600">Creators Supported</p>
+                    <div className="text-center p-4 bg-gradient-to-r from-orange-50 to-orange-100 rounded-xl hover:shadow-md transition-all">
+                      <AlertCircle className="mx-auto mb-2 text-orange-600" size={24} />
+                      <p className="text-2xl font-bold text-orange-600">{mockStats.claimsFiled}</p>
+                      <p className="text-sm text-gray-600">Claims Filed</p>
                     </div>
                     <div className="text-center p-4 bg-gradient-to-r from-purple-50 to-purple-100 rounded-xl hover:shadow-md transition-all">
-                      <Star className="mx-auto mb-2 text-purple-600" size={24} />
-                      <p className="text-2xl font-bold text-purple-600">{mockStats.favoriteCreators}</p>
-                      <p className="text-sm text-gray-600">Favorites</p>
+                      <TrendingUp className="mx-auto mb-2 text-purple-600" size={24} />
+                      <p className="text-2xl font-bold text-purple-600">₩{(mockStats.totalPayouts / 1000)}K</p>
+                      <p className="text-sm text-gray-600">Total Payouts</p>
                     </div>
                   </div>
                 </div>
@@ -706,25 +709,25 @@ const UserProfile = () => {
             {activeTab === 'activity' && (
               <div className="space-y-6 animate-fadeIn">
                 <div className="bg-white rounded-2xl shadow-lg p-6">
-                  <h3 className="text-xl font-bold text-[#144489] mb-6 flex items-center">
-                    <Activity className="mr-2 text-[#EFAC20]" size={24} />
+                  <h3 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                    <Activity className="mr-2 text-emerald-600" size={24} />
                     Recent Activity
                   </h3>
                   <div className="space-y-4">
                     {mockTransactions.map((tx) => (
                       <div key={tx.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:shadow-md transition-all hover:scale-102 transform">
                         <div className="flex items-center">
-                          <div className="w-10 h-10 bg-[#EFAC20] rounded-full flex items-center justify-center mr-4">
-                            <Gift className="text-white" size={18} />
+                          <div className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center mr-4">
+                            <Shield className="text-white" size={18} />
                           </div>
                           <div>
-                            <p className="font-semibold text-gray-800">Gifted {tx.creator}</p>
+                            <p className="font-semibold text-gray-800">{tx.type === 'claim' ? 'Filed Claim' : tx.type === 'payout' ? 'Received Payout' : 'Paid Premium'} - {tx.policy}</p>
                             <p className="text-sm text-gray-500">{tx.date}</p>
                           </div>
                         </div>
                         <div className="text-right">
-                          <p className="font-bold text-[#144489]">₩{tx.amount.toLocaleString()}</p>
-                          <p className="text-xs text-gray-500">KRW-S</p>
+                          <p className="font-bold text-emerald-600">₩{tx.amount.toLocaleString()}</p>
+                          <p className="text-xs text-gray-500">{tx.type === 'claim' ? 'Claim' : tx.type === 'payout' ? 'Payout' : 'Premium'}</p>
                         </div>
                       </div>
                     ))}
@@ -733,28 +736,28 @@ const UserProfile = () => {
               </div>
             )}
 
-            {/* Creators Tab */}
-            {activeTab === 'creators' && (
+            {/* Policies Tab */}
+            {activeTab === 'policies' && (
               <div className="space-y-6 animate-fadeIn">
                 <div className="bg-white rounded-2xl shadow-lg p-6">
-                  <h3 className="text-xl font-bold text-[#144489] mb-6 flex items-center">
-                    <Heart className="mr-2 text-[#EFAC20]" size={24} />
-                    Supported Creators
+                  <h3 className="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                    <Shield className="mr-2 text-emerald-600" size={24} />
+                    My Insurance Policies
                   </h3>
                   <div className="grid md:grid-cols-2 gap-4">
-                    {mockCreators.map((creator, index) => (
+                    {mockPolicies.map((policy, index) => (
                       <div key={index} className="p-4 bg-gray-50 rounded-lg hover:shadow-md transition-all hover:scale-102 transform">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center">
-                            <div className="text-2xl mr-3">{creator.avatar}</div>
+                            <div className="text-2xl mr-3">{policy.avatar}</div>
                             <div>
-                              <p className="font-semibold text-gray-800">{creator.name}</p>
-                              <p className="text-sm text-gray-500">{creator.category}</p>
+                              <p className="font-semibold text-gray-800">{policy.name}</p>
+                              <p className="text-sm text-gray-500">{policy.category}</p>
                             </div>
                           </div>
                           <div className="text-right">
-                            <p className="font-bold text-[#144489]">₩{creator.gifted.toLocaleString()}</p>
-                            <p className="text-xs text-gray-500">Total Gifted</p>
+                            <p className="font-bold text-emerald-600">₩{policy.coverage.toLocaleString()}</p>
+                            <p className="text-xs text-gray-500">{policy.status}</p>
                           </div>
                         </div>
                       </div>

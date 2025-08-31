@@ -61,7 +61,7 @@ export default function WalletOptions() {
     return (
       <div className="relative wallet-options">
         <button
-          className="flex items-center space-x-1 sm:space-x-2 px-3 sm:px-4 py-2 bg-[#144489] text-white rounded-lg hover:bg-[#1a5ba8] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#144489] focus:ring-offset-2"
+          className="flex items-center space-x-1 sm:space-x-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-lg hover:from-emerald-600 hover:to-green-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 border border-emerald-400/30 shadow-sm"
         >
           <div className="w-2 h-2 bg-green-400 rounded-full"></div>
           <span className="text-xs sm:text-sm font-medium">Loading...</span>
@@ -75,7 +75,7 @@ export default function WalletOptions() {
       <div className="relative wallet-options">
         <button
           onClick={() => setShowOptions(!showOptions)}
-          className="flex items-center space-x-1 sm:space-x-2 px-3 sm:px-4 py-2 bg-[#144489] text-white rounded-lg hover:bg-[#1a5ba8] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#144489] focus:ring-offset-2"
+          className="flex items-center space-x-1 sm:space-x-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-lg hover:from-emerald-600 hover:to-green-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 border border-emerald-400/30 shadow-sm"
         >
           <div className="w-2 h-2 bg-green-400 rounded-full"></div>
           <span className="text-xs sm:text-sm font-medium">
@@ -135,7 +135,7 @@ export default function WalletOptions() {
     <div className="relative wallet-options">
       <button
         onClick={() => setShowOptions(!showOptions)}
-        className="flex items-center space-x-1 sm:space-x-2 px-3 sm:px-4 py-2 bg-[#144489] text-white rounded-lg hover:bg-[#1a5ba8] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#144489] focus:ring-offset-2"
+        className="flex items-center space-x-1 sm:space-x-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-lg hover:from-emerald-600 hover:to-green-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 border border-emerald-400/30 shadow-sm"
       >
         <svg width="14" height="14" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M21 12V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -173,7 +173,7 @@ export default function WalletOptions() {
             <div className="w-full md:w-1/2 p-2 md:border-r border-gray-200">
               <div className="text-xs font-medium text-gray-500 mb-2 px-1">Installed</div>
               
-              {/* Kaia Recommendation */}
+              {/* Kaia Recommendation - Commented out
               <div className="mb-2 p-2 bg-gradient-to-r from-[#ABFF27]/10 to-black/5 border border-[#ABFF27]/20 rounded-lg">
                 <div className="flex items-center space-x-2 mb-2">
                   <div className="w-6 h-6 bg-black rounded flex items-center justify-center">
@@ -202,6 +202,7 @@ export default function WalletOptions() {
                   Install Kaia-Wallet
                 </a>
               </div>
+              */}
               
               {connectors.map((connector) => (
                 <button

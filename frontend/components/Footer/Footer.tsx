@@ -114,7 +114,7 @@ export default function Footer({ scrollToSection }: FooterProps) {
         <div className="border-t border-gray-700 mt-8 pt-8">
           <div className="text-center">
             <p className="text-gray-400 text-sm">
-              © 2024 VerdeGuard. All rights reserved. Built with ❤️ for farmers worldwide.
+              © 2025 VerdeGuard. All rights reserved. Built with ❤️ for farmers worldwide.
             </p>
           </div>
         </div>
