@@ -18,8 +18,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Manna (만나) - Bridging Global Passion to Korean Creativity",
-            description: "Direct, instant support from global fans to Korean webtoon artists, musicians, streamers, and educators using KRW Stablecoin. Eliminate payment barriers and connect passion with prosperity.",
+  title: "VerdeGuard - Decentralized Crop Insurance for Latin American Farmers",
+  description:
+    "Protect your crops with AI-powered, blockchain-based insurance. Instant payouts, transparent claims, and accessible coverage for small-scale farmers.",
+  generator: "v0.app",
+  keywords: "crop insurance, blockchain, AI, farmers, Latin America, decentralized, smart contracts",
+  authors: [{ name: "VerdeGuard Team" }],
+  openGraph: {
+    title: "VerdeGuard - Revolutionary Crop Insurance",
+    description: "AI-powered, blockchain-based crop insurance with instant payouts for Latin American farmers.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
