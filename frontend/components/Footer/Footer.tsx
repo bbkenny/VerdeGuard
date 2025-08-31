@@ -10,7 +10,7 @@ interface FooterProps {
 
 export default function Footer({ scrollToSection }: FooterProps) {
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-gradient-to-r from-emerald-800 to-green-900 text-white">
       <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo and Description */}
