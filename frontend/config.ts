@@ -9,26 +9,26 @@ declare module 'wagmi' {
 
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 
-// Define Kaia testnet chain
-const kaiaTestnet = {
-  id: 1001,
-  name: 'Kaia Testnet',
+// Define Base Sepolia testnet chain
+const baseSepolia = {
+  id: 84532,
+  name: 'Base Sepolia',
   nativeCurrency: {
     decimals: 18,
-    name: 'Kaia',
-    symbol: 'KAIA',
+    name: 'Ether',
+    symbol: 'ETH',
   },
   rpcUrls: {
-    default: { http: ['https://public-en-kairos.node.kaia.io'] },
-    public: { http: ['https://public-en-kairos.node.kaia.io'] },
+    default: { http: ['https://sepolia.base.org'] },
+    public: { http: ['https://sepolia.base.org'] },
   },
   blockExplorers: {
-    default: { name: 'Kaia Explorer', url: 'https://explorer.kaia.io' },
+    default: { name: 'Base Sepolia Explorer', url: 'https://sepolia.basescan.org' },
   },
   testnet: true,
 } as const;
 
-export const supportedNetworks = [kaiaTestnet] as const;
+export const supportedNetworks = [baseSepolia] as const;
 
 export const config = createConfig({
   chains: supportedNetworks,
@@ -36,8 +36,8 @@ export const config = createConfig({
     walletConnect({ projectId : projectId ?? ''}),
   ],
   transports: {
-    [kaiaTestnet.id]: fallback([
-      http('https://public-en-kairos.node.kaia.io'),
+    [baseSepolia.id]: fallback([
+      http('https://sepolia.base.org'),
     ]),
   },
 });

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { useAccount, useReadContract, useWriteContract, useSwitchChain } from "wagmi";
+import { useAccount, useWriteContract, useSwitchChain } from "wagmi";
 import { parseUnits, formatUnits } from "viem";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
@@ -15,8 +15,6 @@ import {
   Copy, 
   Check, 
   TrendingUp, 
-  Heart, 
-  Gift, 
   Settings,
   Bell,
   Shield,
@@ -25,7 +23,6 @@ import {
   ChevronRight,
   Activity,
   Calendar,
-  Star,
   Users,
   AlertCircle,
   Loader2,
@@ -34,9 +31,8 @@ import {
 } from 'lucide-react';
 
 // Contract Configuration - Placeholder for future VerdeGuard contracts
-const VERDEGUARD_CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000000" as `0x${string}`;
 const POLICY_PROVIDER_ADDRESS = "0x0000000000000000000000000000000000000000" as `0x${string}`;
-const CHAIN_ID = 1001; // Placeholder chain ID
+const CHAIN_ID = 84532; // Base Sepolia chain ID
 
 interface InsuranceTransaction {
   from: string;
@@ -95,26 +91,30 @@ const UserProfile = () => {
   const userAddress = "0x742d35Cc6Bb1332046c003e036Cd2Da7d2E2aD7C";
 
   // Read policy provider's balance - Placeholder for future implementation
-  const { data: policyBalance, refetch: refetchPolicyBalance } = useReadContract({
-    address: VERDEGUARD_CONTRACT_ADDRESS,
-    abi: [] as any, // Placeholder ABI
-    functionName: 'balanceOf',
-    args: [policyAddress as `0x${string}`],
-    query: {
-      enabled: false, // Disabled until contract is deployed
-    },
-  });
+  // const { data: policyBalance } = useReadContract({
+  //   address: VERDEGUARD_CONTRACT_ADDRESS,
+  //   abi: [] as const, // Placeholder ABI
+  //   functionName: 'balanceOf',
+  //   args: [policyAddress as `0x${string}`],
+  //   query: {
+  //     enabled: false, // Disabled until contract is deployed
+  //   },
+  // });
 
   // Read user's balance - Placeholder for future implementation
-  const { data: userBalance } = useReadContract({
-    address: VERDEGUARD_CONTRACT_ADDRESS,
-    abi: [] as any, // Placeholder ABI
-    functionName: 'balanceOf',
-    args: [address as `0x${string}`],
-    query: {
-      enabled: false, // Disabled until contract is deployed
-    },
-  });
+  // const { data: userBalance } = useReadContract({
+  //   address: VERDEGUARD_CONTRACT_ADDRESS,
+  //   abi: [] as const, // Placeholder ABI
+  //   functionName: 'balanceOf',
+  //   args: [address as `0x${string}`],
+  //   query: {
+  //     enabled: false, // Disabled until contract is deployed
+  //   },
+  // });
+
+  // Placeholder data for now
+  const policyBalance = BigInt(0);
+  const userBalance = BigInt(0);
 
   // Write function to transfer KRW-S
   const { writeContract, isPending: isTransferPending, data: writeData } = useWriteContract();
@@ -169,8 +169,7 @@ const UserProfile = () => {
   };
 
   const getUserBalanceDisplay = (): string => {
-    if (!userBalance) return "0";
-    return Math.floor(parseFloat(formatBalance(userBalance as bigint))).toLocaleString();
+    return Math.floor(parseFloat(formatBalance(userBalance))).toLocaleString();
   };
 
 
@@ -201,7 +200,7 @@ const UserProfile = () => {
       await switchChain({ chainId: CHAIN_ID });
     } catch (error: unknown) {
       console.error("Failed to switch network:", error);
-      setTransactionStatus("Failed to switch network. Please switch to the correct network manually.");
+      setTransactionStatus("Failed to switch network. Please switch to Base Sepolia manually.");
     }
   };
 
@@ -222,7 +221,7 @@ const UserProfile = () => {
     }
 
     if (isWrongNetwork) {
-      setTransactionStatus("Please switch to the correct network.");
+      setTransactionStatus("Please switch to Base Sepolia.");
       return;
     }
 
@@ -289,7 +288,7 @@ const UserProfile = () => {
           <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-lg flex items-center justify-between">
             <div className="flex items-center">
               <AlertCircle className="text-amber-600 mr-3" size={20} />
-              <span className="text-amber-800 font-medium">Please switch to the correct network</span>
+              <span className="text-amber-800 font-medium">Please switch to Base Sepolia</span>
             </div>
             <button 
               onClick={handleSwitchNetwork}

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FileText, BookOpen, Github, Shield, Globe, Users } from "lucide-react";
+
 
 interface FooterProps {
   scrollToSection: (id: string) => void;
@@ -53,7 +53,7 @@ export default function Footer({ scrollToSection }: FooterProps) {
               </li>
               <li>
                 <Link 
-                  href="/user-profile"
+                  href="/user-dash"
                   className="text-gray-300 hover:text-emerald-400 transition-colors"
                 >
                   Dashboard

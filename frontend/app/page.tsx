@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import { Button } from "@/components/ui/button"
@@ -186,7 +185,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-xl font-semibold mb-4">Inaccessible Insurance</h3>
                 <p className="text-muted-foreground">
-                  Traditional policies require formal credit history and collateral that most small farmers don't have.
+                  Traditional policies require formal credit history and collateral that most small farmers don&apos;t have.
                 </p>
               </CardContent>
             </Card>
@@ -464,8 +463,8 @@ export default function HomePage() {
                 </div>
                 <div className="text-center md:text-left">
                   <blockquote className="text-xl md:text-2xl text-balance mb-6 italic">
-                    "VerdeGuard saved my farm. When the drought hit, I received my payout in just 30 minutes.
-                    Traditional insurance would have taken months, if they paid at all."
+                    &ldquo;VerdeGuard saved my farm. When the drought hit, I received my payout in just 30 minutes.
+                    Traditional insurance would have taken months, if they paid at all.&rdquo;
                   </blockquote>
                   <div className="flex items-center justify-center md:justify-start space-x-4">
                     <div>

@@ -1,21 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/provider";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  fallback: ["system-ui", "Arial", "sans-serif"],
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  fallback: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "VerdeGuard - Decentralized Crop Insurance for Latin American Farmers",
@@ -39,9 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
+        className="antialiased font-sans"
         style={{
-          fontFamily: `var(--font-geist-sans), system-ui, Arial, sans-serif`,
+          fontFamily: `system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif`,
         }}
       >
         <Providers>
