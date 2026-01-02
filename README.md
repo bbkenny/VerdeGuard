@@ -1,59 +1,99 @@
-# Manna (만나): Bridging Global Passion to Korean Creativity
+# VerdeGuard 🌱🛡️
 
-**Korea Stablecoin Hackathon 2025 - KRW Stablecoin Ideathon Track**
+**Decentralized Crop Insurance Platform for Latin American Farmers**
 
-**Vision:** To build the foundational payment infrastructure for the global K-culture economy, powered by a KRW Stablecoin.
+**Vision:** Revolutionizing agricultural insurance through AI-powered damage assessment and blockchain-based instant payouts.
 
 ---
 
-## About Manna
+## About VerdeGuard
 
-Manna (만나) is a decentralized platform designed to revolutionize how global fans support Korean creators (webtoon artists, musicians, streamers, educators). By leveraging a KRW Stablecoin (KRW-S), Manna enables instant, transparent, and low-cost direct financial transfers, solving the pervasive issues of high fees, slow settlements, and lack of transparency in cross-border payments.
+VerdeGuard is a decentralized platform designed to provide accessible, transparent, and instant crop insurance for Latin American farmers. By combining satellite monitoring, AI-powered damage assessment, and blockchain technology, VerdeGuard eliminates traditional barriers like credit history requirements, high premiums, and delayed claim processing.
 
-This repository contains the proof-of-concept (PoC) for **Phase 1** of our vision, demonstrating the core fan-to-creator tipping functionality. While this prototype is focused, it is the first step in a much larger, multi-phase roadmap.
+This repository contains the complete VerdeGuard platform, including the frontend application and smart contract infrastructure for automated insurance policy management and instant payouts.
 
-## Live Prototype & Resources
+## Key Features
 
-- **Live Prototype:** [https://mannas.vercel.app/] - *Experience our Phase 1 prototype demonstrating core fan-to-creator support functionality!*
-- **Pitch Deck:** [https://docs.google.com/presentation/d/1qKJidCy1NT8JviqDgs9dH36ehSE499nY/edit?usp=sharing&ouid=100528488557506058575&rtpof=true&sd=true] - *Dive deeper into our vision, market, and business model.*
-- **Concept Document:** [https://docs.google.com/document/d/1I5fVrMsMLdSgmz3cI8YoEI8o7y8vWkBMGKT31-908u8/edit?usp=sharing] - *Comprehensive details of the project.*
-
-## Application Screenshots
-
-### Landing Page
-![Manna Landing Page](./frontend/public/landing-snapshot.png)
-
-### User Profile Dashboard
-![Manna User Dashboard](./frontend/public/userdash-snapshot.png)
-
-## Our Long-Term Roadmap
-
-Manna's journey unfolds in three strategic phases:
-
-- **Phase 1: Launch Manna (Direct Creator Bridge):** Perfect direct fan-to-creator funding, proving the immediate utility of KRW-S.
-- **Phase 2: Build the K-Culture Ecosystem:** Expand into merchandise, digital goods, event ticketing, and gaming integrations.
-- **Phase 3: The KRW-S Super-App:** Evolve into a universal payment and loyalty network for the broader Korean economy, including retail and tourism.
+- **🛰️ Satellite Monitoring** - Real-time crop health assessment using satellite imagery
+- **🤖 AI-Powered Claims** - Automated damage detection and quantification
+- **⚡ Instant Payouts** - Blockchain-based smart contracts for immediate compensation
+- **🌍 Accessibility** - No credit history or collateral requirements
+- **💚 Transparency** - All transactions and claims visible on-chain
+- **📱 User-Friendly** - Simple dashboard for farmers to manage policies
 
 ## Repository Structure
 
 This repository is organized into two main parts:
-- `/frontend/`: Contains the Next.js frontend application with the Phase 1 prototype.
-- `/smart-contract/`: Contains the Hardhat project for the KRW-S stablecoin smart contract.
+- `/frontend/`: Next.js application for farmer dashboard and insurance management
+- `/smart-contract/`: Hardhat project for insurance policy smart contracts
 
-For detailed instructions on running the frontend prototype, please refer to the [Frontend README](./frontend/README.md).
-For details on the KRW Stablecoin smart contract, please refer to the [Smart Contract README](./smart-contract/README.md).
+For detailed instructions on running the frontend, please refer to the [Frontend README](./frontend/README.md).
+For details on the smart contracts, please refer to the [Smart Contract README](./smart-contract/README.md).
 
-## Tech Stack (Phase 1 Prototype)
+## Tech Stack
 
-- **Blockchain:** Kaia Testnet
-- **Frontend:** Next.js (TypeScript, Tailwind CSS)
-- **Web3 Library:** Wagmi
-- **Wallet Integration:** Kaikas / MetaMask
-- **Smart Contract:** ERC-20 KRW-S Stablecoin
+- **Blockchain:** Base Sepolia Testnet
+- **Frontend:** Next.js 15 (TypeScript, Tailwind CSS)
+- **Web3 Library:** Wagmi v2 + Viem
+- **Wallet Integration:** MetaMask / WalletConnect
+- **Smart Contracts:** Solidity (ERC-20 based insurance tokens)
+- **UI Components:** shadcn/ui
 
-##  Curated By 
-Babalola Taiwo J
-t.babalolajoseph@gmail.com
+## Quick Start
+
+### Prerequisites
+- Node.js 18+
+- MetaMask or compatible Web3 wallet
+- Base Sepolia testnet ETH
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/bbkenny/VerdeGuard.git
+cd VerdeGuard
+
+# Install dependencies
+npm install
+
+# Start frontend
+cd frontend
+npm run dev
+
+# Deploy smart contracts (in separate terminal)
+cd smart-contract
+npm install
+npx hardhat compile
+```
+
+## How It Works
+
+1. **Purchase Policy** - Farmers select crop type and coverage amount
+2. **Satellite Monitoring** - Automated crop health tracking via satellite
+3. **Damage Detection** - AI analyzes imagery for crop damage
+4. **Instant Payout** - Smart contract automatically processes claims and transfers funds
+
+## Contributing
+
+We welcome contributions! Please follow these steps:
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## License
+
+MIT License - See LICENSE file for details
+
+## Contact
+
+**Project Lead:** Babalola Taiwo J  
+**Email:** t.babalolajoseph@gmail.com
+
+---
+
+**VerdeGuard** - Protecting Farmers, Securing Futures 🌱🛡️
+
 
 
 
